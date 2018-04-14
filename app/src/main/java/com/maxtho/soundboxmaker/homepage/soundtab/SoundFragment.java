@@ -1,26 +1,26 @@
 package com.maxtho.soundboxmaker.homepage.soundtab;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.maxtho.soundboxmaker.R;
-import com.maxtho.soundboxmaker.homepage.HomePageActivity;
-import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundCategorieAdapter;
+import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundCategorieExpandableListAdapter;
+import com.maxtho.soundboxmaker.homepage.soundtab.data.SoundsDataPump;
 import com.maxtho.soundboxmaker.homepage.soundtab.ui.AddSoundBottomSheetFragment;
 import com.maxtho.soundboxmaker.model.entity.Sound;
-import com.maxtho.soundboxmaker.model.entity.SoundCategorie;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,13 +29,18 @@ import butterknife.OnClick;
 
 public class SoundFragment extends Fragment {
 
-    @BindView(R.id.recyclerview_sounds_list)
-    RecyclerView soundCategorieRecyclerView;
+    @BindView(R.id.expandableListView_categorie_sounds)
+    ExpandableListView expandableListView;
 
     @BindView(R.id.floatingButton_addSound)
     FloatingActionButton floatingActionButtonAddSound;
 
-    private SoundCategorieAdapter soundCategorieAdapter;
+    private Context context;
+
+    List<String> expandableListTitle;
+    HashMap<String, List<Sound>> expandableListDetail;
+
+    private MediaPlayer mp;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,10 +70,48 @@ public class SoundFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sound, container, false);
         ButterKnife.bind(this, v);
-        soundCategorieAdapter = new SoundCategorieAdapter(initSounds());
-        soundCategorieRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        soundCategorieRecyclerView.setAdapter(soundCategorieAdapter);
-        soundCategorieRecyclerView.setHasFixedSize(true);
+
+        context = this.getContext();
+
+        expandableListDetail = SoundsDataPump.getData();
+        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        SoundCategorieExpandableListAdapter expandableListAdapter = new SoundCategorieExpandableListAdapter(context, expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(context,
+                        expandableListTitle.get(groupPosition) + " List Expanded.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(context,
+                        expandableListTitle.get(groupPosition) + " List Collapsed.",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                Sound s = expandableListDetail.get(
+                        expandableListTitle.get(groupPosition)).get(
+                        childPosition);
+                if(mp != null)mp.stop();
+                mp = MediaPlayer.create(context, s.getSoundReference());
+                mp.start();
+                return false;
+            }
+        });
+
 
         return v;
     }
@@ -110,36 +153,4 @@ public class SoundFragment extends Fragment {
         new AddSoundBottomSheetFragment().show(this.getActivity().getSupportFragmentManager(), "Dialog");
     }
 
-    private List<SoundCategorie> initSounds() {
-        Sound s1 = new Sound().setName("TVPALC").setSoundReference(R.raw.poulepondeuse);
-        Sound s2 = new Sound().setName("Pssss").setSoundReference(R.raw.quarantecinq);
-        Sound s3 = new Sound().setName("um um").setSoundReference(R.raw.poulepondeuse);
-        Sound s4 = new Sound().setName("Ui").setSoundReference(R.raw.quarantecinq);
-
-        SoundCategorie sc1 = new SoundCategorie()
-                .setTitle("DxP")
-                .setSoundList(Arrays.asList(s1, s2, s3, s4));
-
-        Sound s5 = new Sound().setName("a").setSoundReference(R.raw.quarantecinq);
-        Sound s6 = new Sound().setName("b").setSoundReference(R.raw.poulepondeuse);
-        Sound s7 = new Sound().setName("c").setSoundReference(R.raw.quarantecinq);
-        Sound s8 = new Sound().setName("d").setSoundReference(R.raw.poulepondeuse);
-        Sound s9 = new Sound().setName("e").setSoundReference(R.raw.quarantecinq);
-        Sound s10 = new Sound().setName("f").setSoundReference(R.raw.poulepondeuse);
-
-        SoundCategorie sc2 = new SoundCategorie()
-                .setTitle("Repliques")
-                .setSoundList(Arrays.asList(s5, s6, s7, s8, s9, s10));
-
-        SoundCategorie sc3 = new SoundCategorie()
-                .setTitle("Bruitages")
-                .setSoundList(Arrays.asList(s5, s6, s7, s8, s9, s10));
-
-        SoundCategorie sc4 = new SoundCategorie()
-                .setTitle("Insultes")
-                .setSoundList(Arrays.asList(s5, s6, s7, s8, s9, s10));
-
-
-        return Arrays.asList(sc1, sc2, sc3, sc4);
-    }
 }
