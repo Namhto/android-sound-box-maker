@@ -6,20 +6,18 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.maxtho.soundboxmaker.homepage.boardtab.DashBoardFragment;
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.homepage.boardtab.BoardFragment;
 import com.maxtho.soundboxmaker.homepage.markettab.MarketFragment;
 import com.maxtho.soundboxmaker.homepage.soundtab.SoundFragment;
 
 public class HomePageActivity extends AppCompatActivity implements
         SoundFragment.OnFragmentInteractionListener,
         MarketFragment.OnFragmentInteractionListener,
-        DashBoardFragment.OnFragmentInteractionListener {
+        BoardFragment.OnFragmentInteractionListener {
 
-    private DashBoardFragment dashBoardFragment = new DashBoardFragment();
+    private BoardFragment boardFragment = new BoardFragment();
 
     private SoundFragment soundFragment = new SoundFragment();
 
@@ -35,7 +33,7 @@ public class HomePageActivity extends AppCompatActivity implements
                     getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, marketFragment).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, dashBoardFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, boardFragment).commit();
                     return true;
                 case R.id.navigation_sound:
                     getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, soundFragment).commit();
