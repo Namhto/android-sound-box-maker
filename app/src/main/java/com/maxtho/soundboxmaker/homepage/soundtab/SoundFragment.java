@@ -3,15 +3,20 @@ package com.maxtho.soundboxmaker.homepage.soundtab;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.homepage.HomePageActivity;
 import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundCategorieAdapter;
+import com.maxtho.soundboxmaker.homepage.soundtab.ui.AddSoundBottomSheetFragment;
 import com.maxtho.soundboxmaker.model.entity.Sound;
 import com.maxtho.soundboxmaker.model.entity.SoundCategorie;
 
@@ -20,11 +25,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SoundFragment extends Fragment {
 
     @BindView(R.id.recyclerview_sounds_list)
     RecyclerView soundCategorieRecyclerView;
+
+    @BindView(R.id.floatingButton_addSound)
+    FloatingActionButton floatingActionButtonAddSound;
 
     private SoundCategorieAdapter soundCategorieAdapter;
 
@@ -54,10 +63,8 @@ public class SoundFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sound, container, false);
         ButterKnife.bind(this, v);
-
         soundCategorieAdapter = new SoundCategorieAdapter(initSounds());
         soundCategorieRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
         soundCategorieRecyclerView.setAdapter(soundCategorieAdapter);
@@ -96,6 +103,11 @@ public class SoundFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @OnClick(R.id.floatingButton_addSound)
+    public void addSound(View view) {
+        new AddSoundBottomSheetFragment().show(this.getActivity().getSupportFragmentManager(), "Dialog");
     }
 
     private List<SoundCategorie> initSounds() {
