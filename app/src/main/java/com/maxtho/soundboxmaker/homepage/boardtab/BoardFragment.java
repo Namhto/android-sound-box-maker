@@ -15,6 +15,7 @@ import com.maxtho.soundboxmaker.model.entity.Board;
 import com.maxtho.soundboxmaker.model.entity.Color;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,8 +23,13 @@ import butterknife.ButterKnife;
 
 public class BoardFragment extends Fragment {
 
+    @BindView(R.id.board_list_favorite)
+    ListView boardListFavorite;
+
     @BindView(R.id.board_list)
     ListView boardList;
+
+    private BoardAdapter adapterFavorite;
 
     private BoardAdapter adapter;
 
@@ -56,10 +62,44 @@ public class BoardFragment extends Fragment {
         list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.ORANGE));
         list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.GREY));
 
-        adapter = new BoardAdapter(getContext(), 0, list);
+        List<Board> favoriteBoardList = new ArrayList<>();
+        List<Board> otherBoardList = new ArrayList<>();
+        Iterator<Board> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Board board = iterator.next();
+            if (board.isFavorite()) {
+                favoriteBoardList.add(board);
+            } else {
+                otherBoardList.add(board);
+            }
+        }
+
+        adapterFavorite = new BoardAdapter(getContext(), 0, favoriteBoardList);
+        View boardListFavoriteHeader = getLayoutInflater().inflate(R.layout.list_view_favorite_header, boardListFavorite, false);
+        boardListFavorite.addHeaderView(boardListFavoriteHeader);
+        boardListFavorite.setAdapter(adapterFavorite);
+        setListViewHeight(boardListFavorite);
+
+        adapter = new BoardAdapter(getContext(), 0, otherBoardList);
+        View boardListHeader = getLayoutInflater().inflate(R.layout.list_view_header, boardList, false);
+        boardList.addHeaderView(boardListHeader);
         boardList.setAdapter(adapter);
+        setListViewHeight(boardList);
 
         return view;
+    }
+
+    private void setListViewHeight(ListView listView) {
+        int totalHeight = 0;
+        for (int i = 0; i < listView.getAdapter().getCount(); i++) {
+            View listItem = listView.getAdapter().getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listView.getAdapter().getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
     @Override
