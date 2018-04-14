@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.soundtab.holder.CategorieSoundViewHolder;
+import com.maxtho.soundboxmaker.model.entity.Sound;
 import com.maxtho.soundboxmaker.model.entity.SoundCategorie;
 
 
@@ -44,7 +45,9 @@ public class SoundCategorieAdapter extends RecyclerView.Adapter<CategorieSoundVi
         }
         for (int textViewIndex = 0; textViewIndex < noOfChild; textViewIndex++) {
             TextView currentTextView = (TextView) holder.linearLayout_soundItems.getChildAt(textViewIndex);
-            currentTextView.setText(dummyParentDataItem.getSoundList().get(textViewIndex).getName());
+            Sound s = dummyParentDataItem.getSoundList().get(textViewIndex);
+            currentTextView.setText(s.getName());
+            currentTextView.setTag(s.getSoundReference());
         }
     }
 

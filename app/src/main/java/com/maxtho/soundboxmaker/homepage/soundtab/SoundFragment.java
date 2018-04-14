@@ -99,21 +99,21 @@ public class SoundFragment extends Fragment {
     }
 
     private List<SoundCategorie> initSounds() {
-        Sound s1 = new Sound().setName("TVPALC");
-        Sound s2 = new Sound().setName("Pssss");
-        Sound s3 = new Sound().setName("um um");
-        Sound s4 = new Sound().setName("Ui");
+        Sound s1 = new Sound().setName("TVPALC").setSoundReference(R.raw.poulepondeuse);
+        Sound s2 = new Sound().setName("Pssss").setSoundReference(R.raw.quarantecinq);
+        Sound s3 = new Sound().setName("um um").setSoundReference(R.raw.poulepondeuse);
+        Sound s4 = new Sound().setName("Ui").setSoundReference(R.raw.quarantecinq);
 
         SoundCategorie sc1 = new SoundCategorie()
                 .setTitle("DxP")
                 .setSoundList(Arrays.asList(s1, s2, s3, s4));
 
-        Sound s5 = new Sound().setName("a");
-        Sound s6 = new Sound().setName("b");
-        Sound s7 = new Sound().setName("c");
-        Sound s8 = new Sound().setName("d");
-        Sound s9 = new Sound().setName("e");
-        Sound s10 = new Sound().setName("f");
+        Sound s5 = new Sound().setName("a").setSoundReference(R.raw.quarantecinq);
+        Sound s6 = new Sound().setName("b").setSoundReference(R.raw.poulepondeuse);
+        Sound s7 = new Sound().setName("c").setSoundReference(R.raw.quarantecinq);
+        Sound s8 = new Sound().setName("d").setSoundReference(R.raw.poulepondeuse);
+        Sound s9 = new Sound().setName("e").setSoundReference(R.raw.quarantecinq);
+        Sound s10 = new Sound().setName("f").setSoundReference(R.raw.poulepondeuse);
 
         SoundCategorie sc2 = new SoundCategorie()
                 .setTitle("Repliques")

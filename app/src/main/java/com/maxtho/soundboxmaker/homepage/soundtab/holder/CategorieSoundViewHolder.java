@@ -1,6 +1,7 @@
 package com.maxtho.soundboxmaker.homepage.soundtab.holder;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -23,6 +24,8 @@ public class CategorieSoundViewHolder extends RecyclerView.ViewHolder implements
     public TextView textView_categorie;
     @BindView(R.id.ll_sound_items)
     public LinearLayout linearLayout_soundItems;
+
+    private MediaPlayer mp;
 
     private Context context;
 
@@ -67,6 +70,10 @@ public class CategorieSoundViewHolder extends RecyclerView.ViewHolder implements
         } else {
             TextView textViewClicked = (TextView) view;
             Toast.makeText(context, "" + textViewClicked.getText().toString(), Toast.LENGTH_SHORT).show();
+            if(mp != null)mp.stop();
+            mp = MediaPlayer.create(view.getContext(), Integer.parseInt(view.getTag().toString()));
+            mp.start();
+
         }
     }
 }
