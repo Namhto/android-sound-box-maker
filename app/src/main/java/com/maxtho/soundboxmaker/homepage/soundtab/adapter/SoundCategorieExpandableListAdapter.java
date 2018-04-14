@@ -77,16 +77,26 @@ public class SoundCategorieExpandableListAdapter extends BaseExpandableListAdapt
     @Override
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
+
         String listTitle = (String) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item_categorie, null);
         }
-        TextView listTitleTextView = (TextView) convertView
-                .findViewById(R.id.tv_sound_categorie);
+        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.tv_sound_categorie);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
         listTitleTextView.setText(listTitle);
+
+        /*
+        ImageView imageViewSoundCategorie = (ImageView) convertView.findViewById(R.id.imageView_soundCategorie);
+        if (isExpanded) {
+            imageViewSoundCategorie.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
+        } else {
+            imageViewSoundCategorie.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
+        }
+        */
+
         return convertView;
     }
 
