@@ -6,20 +6,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 
 import com.maxtho.soundboxmaker.R;
-import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundCategorieExpandableListAdapter;
+import com.maxtho.soundboxmaker.homepage.soundtab.adapter.CategorieRecycleViewAdapter;
 import com.maxtho.soundboxmaker.homepage.soundtab.data.SoundsDataPump;
 import com.maxtho.soundboxmaker.homepage.soundtab.fragment.AddSoundBottomSheetFragment;
-import com.maxtho.soundboxmaker.model.entity.Sound;
+import com.maxtho.soundboxmaker.model.entity.SoundCategorie;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,16 +26,24 @@ import butterknife.OnClick;
 
 public class SoundFragment extends Fragment {
 
-    @BindView(R.id.expandableListView_categorie_sounds)
-    ExpandableListView expandableListView;
+    //@BindView(R.id.expandableListView_categorie_sounds)
+    //ExpandableListView expandableListView;
+
+    @BindView(R.id.rv_categorie_sounds)
+    RecyclerView recyclerViewCategorie;
 
     @BindView(R.id.floatingButton_addSound)
     FloatingActionButton floatingActionButtonAddSound;
 
     private Context context;
+    List<SoundCategorie> listSoundCategorie;
 
+    /*
     List<String> expandableListTitle;
     HashMap<String, List<Sound>> expandableListDetail;
+    */
+    private CategorieRecycleViewAdapter categorieRecycleViewAdapter;
+
 
     private MediaPlayer mp;
 
@@ -72,17 +78,32 @@ public class SoundFragment extends Fragment {
 
         context = this.getContext();
 
+        recyclerViewCategorie.setLayoutManager(new LinearLayoutManager(getContext()));
+        categorieRecycleViewAdapter = new CategorieRecycleViewAdapter(this.getContext(), SoundsDataPump.getListData());
+        recyclerViewCategorie.setAdapter(categorieRecycleViewAdapter);
+
+
+        /*
         expandableListDetail = SoundsDataPump.getData();
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+*/
+
+        /*
+        CategorieSoundAdapter categorieSoundAdapter = new CategorieSoundAdapter(context, 0, getListData());
+        lv_categorieSoundListView.setAdapter(categorieSoundAdapter);
+*/
+
+
+        /*
         SoundCategorieExpandableListAdapter expandableListAdapter = new SoundCategorieExpandableListAdapter(context, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                /*Toast.makeText(context,
+                Toast.makeText(context,
                         expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();*/
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -90,9 +111,9 @@ public class SoundFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                /*Toast.makeText(context,
+                Toast.makeText(context,
                         expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();*/
+                        Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -119,6 +140,8 @@ public class SoundFragment extends Fragment {
                 return false;
             }
         });
+
+        */
 
 
         return v;
