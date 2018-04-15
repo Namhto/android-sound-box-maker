@@ -50,6 +50,7 @@ public class SoundCategorieExpandableListAdapter extends BaseExpandableListAdapt
         TextView expandedListTextView = (TextView) convertView
                 .findViewById(R.id.tv_sound_title);
         expandedListTextView.setText(expandedSound.getName());
+
         return convertView;
     }
 
@@ -87,6 +88,8 @@ public class SoundCategorieExpandableListAdapter extends BaseExpandableListAdapt
         TextView listTitleTextView = (TextView) convertView.findViewById(R.id.tv_sound_categorie);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
         listTitleTextView.setText(listTitle);
+        TextView listNumberTextView = (TextView) convertView.findViewById(R.id.categorieTitleNumber);
+        //TODO listNumberTextView.setText();
 
         /*
         ImageView imageViewSoundCategorie = (ImageView) convertView.findViewById(R.id.imageView_soundCategorie);

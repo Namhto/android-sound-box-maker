@@ -4,6 +4,17 @@
         <item>Selectionner une categorie</item>
         <item>Divers</item>
         <item>DxP</item>
-        <item>Repliques</item>
+        <item>Lopez</item>
+    </string-array>
+
+    <string-array name="laboitealopez">
+        <item>cri.mp3</item>
+        <item>heofman.mp3</item>
+        <item>jvaisvousenculer.mp3</item>
+        <item>lacalote.mp3</item>
+        <item>lopezdevosmorts.mp3</item>
+        <item>tafemme.mp3</item>
+        <item>vienslatoi.mp3</item>
+        <item>viensonvaenfinir.mp3</item>
     </string-array>
 </resources>

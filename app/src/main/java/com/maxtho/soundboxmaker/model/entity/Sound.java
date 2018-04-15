@@ -4,7 +4,9 @@ public class Sound {
 
     private String name;
 
-    private int soundReference;
+    private boolean isDefault;
+
+    private String soundReference;
 
     public String getName() {
         return name;
@@ -15,12 +17,21 @@ public class Sound {
         return this;
     }
 
-    public int getSoundReference() {
+    public String getSoundReference() {
         return soundReference;
     }
 
-    public Sound setSoundReference(int soundReference) {
+    public Sound setSoundReference(String soundReference) {
         this.soundReference = soundReference;
+        return this;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public Sound setDefault(boolean aDefault) {
+        isDefault = aDefault;
         return this;
     }
 }

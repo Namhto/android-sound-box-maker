@@ -1,4 +1,4 @@
-package com.maxtho.soundboxmaker.homepage.soundtab.ui;
+package com.maxtho.soundboxmaker.homepage.soundtab.fragment;
 
 import android.app.FragmentManager;
 import android.os.Bundle;

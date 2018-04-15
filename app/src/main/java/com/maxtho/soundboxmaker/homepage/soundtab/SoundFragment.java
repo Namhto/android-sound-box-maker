@@ -14,9 +14,10 @@ import android.widget.ExpandableListView;
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundCategorieExpandableListAdapter;
 import com.maxtho.soundboxmaker.homepage.soundtab.data.SoundsDataPump;
-import com.maxtho.soundboxmaker.homepage.soundtab.ui.AddSoundBottomSheetFragment;
+import com.maxtho.soundboxmaker.homepage.soundtab.fragment.AddSoundBottomSheetFragment;
 import com.maxtho.soundboxmaker.model.entity.Sound;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,7 +105,16 @@ public class SoundFragment extends Fragment {
                         expandableListTitle.get(groupPosition)).get(
                         childPosition);
                 if(mp != null)mp.stop();
-                mp = MediaPlayer.create(context, s.getSoundReference());
+                if (s.isDefault()) {
+                    mp = MediaPlayer.create(context, Integer.parseInt(s.getSoundReference()));
+                } else {
+                    try {
+                        mp.setDataSource(s.getSoundReference());
+                        mp.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 mp.start();
                 return false;
             }
