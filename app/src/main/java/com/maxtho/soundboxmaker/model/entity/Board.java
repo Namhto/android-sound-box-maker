@@ -1,5 +1,8 @@
 package com.maxtho.soundboxmaker.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Othman on 15/04/2018.
  */
@@ -8,11 +11,13 @@ public class Board {
 
     private String title;
 
-    private int count;
+    private List<Sound> sounds = new ArrayList<>();
 
     private boolean favorite;
 
     private String color = Color.BLUE_GREY;
+
+    private int imageResId = -1;
 
     public String getTitle() {
         return title;
@@ -23,12 +28,12 @@ public class Board {
         return this;
     }
 
-    public int getCount() {
-        return count;
+    public List<Sound> getSounds() {
+        return sounds;
     }
 
-    public Board setCount(int count) {
-        this.count = count;
+    public Board setSounds(List<Sound> sounds) {
+        this.sounds = sounds;
         return this;
     }
 
@@ -47,6 +52,15 @@ public class Board {
 
     public Board setColor(String color) {
         this.color = color;
+        return this;
+    }
+
+    public int getImageResId() {
+        return imageResId;
+    }
+
+    public Board setImageResId(int imageResId) {
+        this.imageResId = imageResId;
         return this;
     }
 }

@@ -29,6 +29,8 @@ public class BoardAdapter extends ArrayAdapter<Board> {
         TextView count;
 
         ImageView isFavorite;
+
+        ImageView image;
     }
 
     public BoardAdapter(@NonNull Context context, int resource, @NonNull List<Board> objects) {
@@ -47,13 +49,16 @@ public class BoardAdapter extends ArrayAdapter<Board> {
             viewHolder.title = convertView.findViewById(R.id.board_title);
             viewHolder.count = convertView.findViewById(R.id.board_count);
             viewHolder.isFavorite = convertView.findViewById(R.id.board_favorite);
+            viewHolder.image = convertView.findViewById(R.id.board_image);
             convertView.setTag(viewHolder);
         }
 
         Board item = getItem(position);
         viewHolder.title.setText(item.getTitle());
-        viewHolder.count.setText(String.valueOf(item.getCount()) + " sounds");
+        viewHolder.count.setText(String.valueOf(item.getSounds().size()) + " sounds");
         viewHolder.isFavorite.setImageResource(item.isFavorite() ? R.drawable.ic_star : R.drawable.ic_star_border);
+        if (item.getImageResId() != -1)
+            viewHolder.image.setImageDrawable(getContext().getDrawable(item.getImageResId()));
         ((CardView) convertView.findViewById(R.id.board_list_item_root)).setCardBackgroundColor(Color.parseColor(item.getColor()));
 
         return convertView;

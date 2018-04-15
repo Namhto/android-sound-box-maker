@@ -1,15 +1,19 @@
 package com.maxtho.soundboxmaker.homepage.boardtab;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter;
@@ -25,11 +29,16 @@ import butterknife.ButterKnife;
 
 public class BoardFragment extends Fragment {
 
+    private static final float BOARD_LIST_COLUMN_WIDTH = 100;
+
     @BindView(R.id.board_list_favorite)
-    ListView boardListFavorite;
+    GridView boardListFavorite;
+
+    @BindView(R.id.board_list_favorite_empty)
+    TextView boardListFavoriteEmpty;
 
     @BindView(R.id.board_list)
-    ListView boardList;
+    GridView boardList;
 
     @BindView(R.id.board_scrollview)
     NestedScrollView boardScrollView;
@@ -58,22 +67,23 @@ public class BoardFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         List<Board> list = new ArrayList<>();
-        list.add(new Board().setTitle("Politique").setCount(10).setFavorite(true).setColor(Color.RED));
-        list.add(new Board().setTitle("Insultes").setCount(8).setFavorite(true).setColor(Color.BLUE_GREY));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.BLUE));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.GREEN));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.YELLOW));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.INDIGO));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.PINK));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.LIME));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.TEAL));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.ORANGE));
-        list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.GREY));
+        list.add(new Board().setTitle("Politique").setFavorite(false).setColor(Color.RED).setImageResId(R.mipmap.politique));
+        list.add(new Board().setTitle("Insultes").setFavorite(false).setColor(Color.BLUE_GREY));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.BLUE));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.GREEN));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.YELLOW));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.INDIGO));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.PINK));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.LIME));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.TEAL));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.ORANGE));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.GREY));
 
         populateBoardList(list);
         configureScrollViewBehavior();
         return view;
     }
+
 
     private void configureScrollViewBehavior() {
         boardScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -102,29 +112,39 @@ public class BoardFragment extends Fragment {
         }
 
         adapterFavorite = new BoardAdapter(getContext(), 0, favoriteBoardList);
-        View boardListFavoriteHeader = getLayoutInflater().inflate(R.layout.list_view_favorite_header, boardListFavorite, false);
-        boardListFavorite.addHeaderView(boardListFavoriteHeader);
         boardListFavorite.setAdapter(adapterFavorite);
-        setListViewHeight(boardListFavorite);
+        setGridViewDimensions(boardListFavorite);
 
         adapter = new BoardAdapter(getContext(), 0, otherBoardList);
-        View boardListHeader = getLayoutInflater().inflate(R.layout.list_view_header, boardList, false);
-        boardList.addHeaderView(boardListHeader);
         boardList.setAdapter(adapter);
-        setListViewHeight(boardList);
+        setGridViewDimensions(boardList);
+
+        if (!favoriteBoardList.isEmpty()) {
+            boardListFavoriteEmpty.setVisibility(View.GONE);
+        }
     }
 
-    private void setListViewHeight(ListView listView) {
-        int totalHeight = 0;
-        for (int i = 0; i < listView.getAdapter().getCount(); i++) {
-            View listItem = listView.getAdapter().getView(i, null, listView);
+    private int convertDpToPixels(float dp, Context context){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
+    }
+
+    private void setGridViewDimensions(GridView gridView) {
+        if (gridView.getAdapter().getCount() > 0) {
+            DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+            int gridColumnNumber = (int) Math.floor(dpWidth / BOARD_LIST_COLUMN_WIDTH);
+            gridView.setNumColumns(gridColumnNumber);
+
+            int gridRowNumber = (int) Math.floor(gridView.getAdapter().getCount() / gridColumnNumber) + 1;
+            View listItem = gridView.getAdapter().getView(0, null, gridView);
             listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
+
+            ViewGroup.LayoutParams params = gridView.getLayoutParams();
+            params.height = listItem.getMeasuredHeight() * gridRowNumber;
+            gridView.setLayoutParams(params);
+            gridView.requestLayout();
         }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listView.getAdapter().getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
     }
 
     @Override
