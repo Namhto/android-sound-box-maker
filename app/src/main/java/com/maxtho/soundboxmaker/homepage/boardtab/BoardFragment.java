@@ -3,7 +3,9 @@ package com.maxtho.soundboxmaker.homepage.boardtab;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,12 @@ public class BoardFragment extends Fragment {
 
     @BindView(R.id.board_list)
     ListView boardList;
+
+    @BindView(R.id.board_scrollview)
+    NestedScrollView boardScrollView;
+
+    @BindView(R.id.board_add_fab)
+    FloatingActionButton boardAddFab;
 
     private BoardAdapter adapterFavorite;
 
@@ -62,6 +70,25 @@ public class BoardFragment extends Fragment {
         list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.ORANGE));
         list.add(new Board().setTitle("Bruitage").setCount(15).setFavorite(false).setColor(Color.GREY));
 
+        populateBoardList(list);
+        configureScrollViewBehavior();
+        return view;
+    }
+
+    private void configureScrollViewBehavior() {
+        boardScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY - oldScrollY > 0) {
+                    boardAddFab.hide();
+                } else {
+                    boardAddFab.show();
+                }
+            }
+        });
+    }
+
+    private void populateBoardList(List<Board> list) {
         List<Board> favoriteBoardList = new ArrayList<>();
         List<Board> otherBoardList = new ArrayList<>();
         Iterator<Board> iterator = list.iterator();
@@ -85,8 +112,6 @@ public class BoardFragment extends Fragment {
         boardList.addHeaderView(boardListHeader);
         boardList.setAdapter(adapter);
         setListViewHeight(boardList);
-
-        return view;
     }
 
     private void setListViewHeight(ListView listView) {
