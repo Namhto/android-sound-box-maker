@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.ui.RecordSoundDialogFragment;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

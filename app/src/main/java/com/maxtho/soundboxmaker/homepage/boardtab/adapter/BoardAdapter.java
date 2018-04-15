@@ -53,7 +53,7 @@ public class BoardAdapter extends ArrayAdapter<Board> {
         Board item = getItem(position);
         viewHolder.title.setText(item.getTitle());
         viewHolder.count.setText(String.valueOf(item.getCount()) + " sounds");
-        viewHolder.isFavorite.setImageResource(item.isFavorite() ? R.drawable.ic_star_black_24dp : R.drawable.ic_star_border_black_24dp);
+        viewHolder.isFavorite.setImageResource(item.isFavorite() ? R.drawable.ic_star : R.drawable.ic_star_border);
         ((CardView) convertView.findViewById(R.id.board_list_item_root)).setCardBackgroundColor(Color.parseColor(item.getColor()));
 
         return convertView;

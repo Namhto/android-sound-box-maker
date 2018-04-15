@@ -91,9 +91,9 @@ public class SoundCategorieExpandableListAdapter extends BaseExpandableListAdapt
         /*
         ImageView imageViewSoundCategorie = (ImageView) convertView.findViewById(R.id.imageView_soundCategorie);
         if (isExpanded) {
-            imageViewSoundCategorie.setImageResource(R.drawable.ic_arrow_drop_up_black_24dp);
+            imageViewSoundCategorie.setImageResource(R.drawable.ic_arrow_drop_up);
         } else {
-            imageViewSoundCategorie.setImageResource(R.drawable.ic_arrow_drop_down_black_24dp);
+            imageViewSoundCategorie.setImageResource(R.drawable.ic_arrow_drop_down);
         }
         */
 

@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/ic_dashboard_black_24dp"
+        android:src="@drawable/ic_dashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/board_list_favorite_header_icon"/>

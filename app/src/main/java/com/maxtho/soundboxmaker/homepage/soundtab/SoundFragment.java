@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundCategorieExpandableListAdapter;
@@ -19,7 +18,6 @@ import com.maxtho.soundboxmaker.homepage.soundtab.ui.AddSoundBottomSheetFragment
 import com.maxtho.soundboxmaker.model.entity.Sound;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,9 +79,9 @@ public class SoundFragment extends Fragment {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(context,
+                /*Toast.makeText(context,
                         expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
             }
         });
 
@@ -91,9 +89,9 @@ public class SoundFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(context,
+                /*Toast.makeText(context,
                         expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
 
             }
         });

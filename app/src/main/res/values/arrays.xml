@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Selectionner une categorie</item>
+        <item>Divers</item>
+        <item>DxP</item>
+        <item>Repliques</item>
+    </string-array>
+</resources>

@@ -12,7 +12,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_star_border_black_24dp"
+        android:src="@drawable/ic_star_border"
         app:cardBackgroundColor="#6a89cc"
         app:cardCornerRadius="@dimen/cardview_default_radius"
         app:contentPadding="@dimen/list_item_padding">
@@ -47,7 +47,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_star_border_black_24dp"
+                android:src="@drawable/ic_star_border"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
