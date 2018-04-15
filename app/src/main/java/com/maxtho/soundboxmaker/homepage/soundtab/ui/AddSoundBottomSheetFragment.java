@@ -1,5 +1,6 @@
 package com.maxtho.soundboxmaker.homepage.soundtab.ui;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.util.Log;
@@ -29,11 +30,19 @@ public class AddSoundBottomSheetFragment extends BottomSheetDialogFragment {
     @OnClick(R.id.constraintLayoutAddFromMic)
     public void addSoundFromMic(View view) {
         Log.d("SoundFragment","addFromMic");
+        showEditDialog();
     }
 
     @OnClick(R.id.constraintLayoutAddFromInternet)
     public void addSoundFromInternet(View view) {
         Log.d("SoundFragment","addFromInternet");
     }
+
+    private void showEditDialog() {
+        FragmentManager fm = getActivity().getFragmentManager();
+        RecordSoundDialogFragment builder = RecordSoundDialogFragment.newInstance("Some Title");
+        builder.show(fm, "fragment_edit_name");
+    }
+
 
 }
