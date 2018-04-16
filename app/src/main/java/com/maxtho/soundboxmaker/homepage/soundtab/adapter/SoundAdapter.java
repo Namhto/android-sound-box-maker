@@ -54,4 +54,10 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundViewHolder> {
         return soundList.size();
     }
 
+    public SoundAdapter setSoundList(List<Sound> soundList) {
+        this.soundList = soundList;
+        notifyDataSetChanged();
+        return this;
+    }
+
 }

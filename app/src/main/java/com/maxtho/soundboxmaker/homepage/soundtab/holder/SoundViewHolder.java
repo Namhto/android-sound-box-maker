@@ -31,6 +31,8 @@ public class SoundViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Sound sound) {
 
+        labels.removeAllViews();
+
         title.setText(sound.getName());
         for (String label : sound.getLabels()) {
 
