@@ -2,16 +2,14 @@ package com.maxtho.soundboxmaker.homepage.soundtab.data;
 
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.model.entity.Sound;
-import com.maxtho.soundboxmaker.model.entity.SoundCategorie;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class SoundsDataPump {
 
-    public static HashMap<String, List<Sound>> getData() {
+    public static List<Sound> getData() {
         HashMap<String, List<Sound>> expandableListDetail = new HashMap<String, List<Sound>>();
 
         Sound s1 = new Sound().setName("Poule")
@@ -47,9 +45,10 @@ public class SoundsDataPump {
         expandableListDetail.put("Animaux", Arrays.asList(s1));
         expandableListDetail.put("Armes", Arrays.asList(s2));
         expandableListDetail.put("Lopez", Arrays.asList(s3, s4, s5, s6, s7, s8, s9));
-        return expandableListDetail;
+        return Arrays.asList(s1, s2, s3, s4, s5, s6, s7, s8, s9);
     }
 
+    /*
     public static List<SoundCategorie> getListData() {
         List<SoundCategorie> listDetail = new ArrayList<>();
 
@@ -94,4 +93,5 @@ public class SoundsDataPump {
 
         return listDetail;
     }
+    */
 }

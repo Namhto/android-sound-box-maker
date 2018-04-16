@@ -15,7 +15,7 @@ public class Board {
 
     private boolean favorite;
 
-    private String color = Color.BLUE_GREY;
+    private int color;
 
     private int imageResId = -1;
 
@@ -46,11 +46,11 @@ public class Board {
         return this;
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public Board setColor(String color) {
+    public Board setColor(int color) {
         this.color = color;
         return this;
     }

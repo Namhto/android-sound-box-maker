@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.maxtho.soundboxmaker.R;
-import com.maxtho.soundboxmaker.homepage.soundtab.adapter.CategorieRecycleViewAdapter;
+import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundAdapter;
 import com.maxtho.soundboxmaker.homepage.soundtab.data.SoundsDataPump;
 import com.maxtho.soundboxmaker.homepage.soundtab.fragment.AddSoundBottomSheetFragment;
-import com.maxtho.soundboxmaker.model.entity.SoundCategorie;
+import com.maxtho.soundboxmaker.model.entity.Sound;
 
 import java.util.List;
 
@@ -36,13 +36,13 @@ public class SoundFragment extends Fragment {
     FloatingActionButton floatingActionButtonAddSound;
 
     private Context context;
-    List<SoundCategorie> listSoundCategorie;
+    List<Sound> listSound;
 
     /*
     List<String> expandableListTitle;
     HashMap<String, List<Sound>> expandableListDetail;
     */
-    private CategorieRecycleViewAdapter categorieRecycleViewAdapter;
+    private SoundAdapter categorieRecycleViewAdapter;
 
 
     private MediaPlayer mp;
@@ -79,7 +79,7 @@ public class SoundFragment extends Fragment {
         context = this.getContext();
 
         recyclerViewCategorie.setLayoutManager(new LinearLayoutManager(getContext()));
-        categorieRecycleViewAdapter = new CategorieRecycleViewAdapter(this.getContext(), SoundsDataPump.getListData());
+        categorieRecycleViewAdapter = new SoundAdapter(this.getContext(), SoundsDataPump.getData());
         recyclerViewCategorie.setAdapter(categorieRecycleViewAdapter);
 
 

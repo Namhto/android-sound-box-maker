@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter;
 import com.maxtho.soundboxmaker.model.entity.Board;
-import com.maxtho.soundboxmaker.model.entity.Color;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -67,17 +66,17 @@ public class BoardFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         List<Board> list = new ArrayList<>();
-        list.add(new Board().setTitle("Politique").setFavorite(false).setColor(Color.RED).setImageResId(R.mipmap.politique));
-        list.add(new Board().setTitle("Insultes").setFavorite(false).setColor(Color.BLUE_GREY));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.BLUE));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.GREEN));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.YELLOW));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.INDIGO));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.PINK));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.LIME));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.TEAL));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.ORANGE));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(Color.GREY));
+        list.add(new Board().setTitle("Politique").setFavorite(false).setColor(R.color.RED).setImageResId(R.mipmap.politique));
+        list.add(new Board().setTitle("Insultes").setFavorite(false).setColor(R.color.BLUE_GREY));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.BLUE));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.GREEN));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.YELLOW));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.INDIGO));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.PINK));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.LIME));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.TEAL));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.ORANGE));
+        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.GREY));
 
         populateBoardList(list);
         configureScrollViewBehavior();
@@ -124,7 +123,7 @@ public class BoardFragment extends Fragment {
         }
     }
 
-    private int convertDpToPixels(float dp, Context context){
+    private int convertDpToPixels(float dp, Context context) {
         Resources resources = context.getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
     }

@@ -1,9 +1,9 @@
 package com.maxtho.soundboxmaker.homepage.boardtab.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +59,7 @@ public class BoardAdapter extends ArrayAdapter<Board> {
         viewHolder.isFavorite.setImageResource(item.isFavorite() ? R.drawable.ic_star : R.drawable.ic_star_border);
         if (item.getImageResId() != -1)
             viewHolder.image.setImageDrawable(getContext().getDrawable(item.getImageResId()));
-        ((CardView) convertView.findViewById(R.id.board_list_item_root)).setCardBackgroundColor(Color.parseColor(item.getColor()));
+        ((CardView) convertView.findViewById(R.id.board_list_item_root)).setCardBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), item.getColor(), null));
 
         return convertView;
     }

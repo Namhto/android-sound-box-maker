@@ -1,12 +1,18 @@
 package com.maxtho.soundboxmaker.model.entity;
 
+import java.util.List;
+
 public class Sound {
+
+    private String id;
 
     private String name;
 
     private boolean isDefault;
 
     private String soundReference;
+
+    private List<String> labels;
 
     public String getName() {
         return name;
@@ -32,6 +38,24 @@ public class Sound {
 
     public Sound setDefault(boolean aDefault) {
         isDefault = aDefault;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Sound setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public List<String> getLabels() {
+        return labels;
+    }
+
+    public Sound setLabels(List<String> labels) {
+        this.labels = labels;
         return this;
     }
 }

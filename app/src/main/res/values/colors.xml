@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Theme colors -->
     <color name="colorPrimary">#8E24AA</color>
     <color name="colorPrimaryDark">#6A1B9A</color>
     <color name="colorAccent">#FF6D00</color>
+
+    <!-- Board colors -->
+    <color name="RED">#ef5350</color>
+    <color name="PINK">#ec407a</color>
+    <color name="INDIGO">#5c6bc0</color>
+    <color name="BLUE">#42a5f5</color>
+    <color name="TEAL">#26a69a</color>
+    <color name="GREEN">#66bb6a</color>
+    <color name="LIME">#d4e157</color>
+    <color name="YELLOW">#ffee58</color>
+    <color name="ORANGE">#ffa726</color>
+    <color name="GREY">#e0e0e0</color>
+    <color name="BLUE_GREY">#90a4ae</color>
+
 </resources>
