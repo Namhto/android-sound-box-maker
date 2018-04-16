@@ -82,49 +82,17 @@ public class SoundFragment extends Fragment {
         categorieRecycleViewAdapter = new SoundAdapter(this.getContext(), SoundsDataPump.getData());
         recyclerViewCategorie.setAdapter(categorieRecycleViewAdapter);
 
-
-        /*
-        expandableListDetail = SoundsDataPump.getData();
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-*/
-
-        /*
-        CategorieSoundAdapter categorieSoundAdapter = new CategorieSoundAdapter(context, 0, getListData());
-        lv_categorieSoundListView.setAdapter(categorieSoundAdapter);
-*/
-
-
-        /*
-        SoundCategorieExpandableListAdapter expandableListAdapter = new SoundCategorieExpandableListAdapter(context, expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
+        recyclerViewCategorie.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(context,
-                        expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0)
+                    floatingActionButtonAddSound.hide();
+                else if (dy < 0)
+                    floatingActionButtonAddSound.show();
             }
         });
 
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(context,
-                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                Sound s = expandableListDetail.get(
-                        expandableListTitle.get(groupPosition)).get(
-                        childPosition);
+/*
                 if(mp != null)mp.stop();
                 if (s.isDefault()) {
                     mp = MediaPlayer.create(context, Integer.parseInt(s.getSoundReference()));
@@ -138,9 +106,6 @@ public class SoundFragment extends Fragment {
                 }
                 mp.start();
                 return false;
-            }
-        });
-
         */
 
 

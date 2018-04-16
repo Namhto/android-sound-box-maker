@@ -6,6 +6,10 @@
     <color name="colorPrimaryDark">#6A1B9A</color>
     <color name="colorAccent">#FF6D00</color>
 
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+
     <!-- Board colors -->
     <color name="RED">#ef5350</color>
     <color name="PINK">#ec407a</color>
