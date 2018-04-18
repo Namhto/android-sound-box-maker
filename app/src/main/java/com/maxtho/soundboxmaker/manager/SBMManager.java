@@ -1,15 +1,63 @@
-package com.maxtho.soundboxmaker.homepage.soundtab.data;
+package com.maxtho.soundboxmaker.manager;
 
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.model.entity.Box;
 import com.maxtho.soundboxmaker.model.entity.Sound;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SoundsDataPump {
+public class SBMManager {
 
-    public static List<Sound> getData() {
+    private List<Box> boxList;
+
+    private List<Sound> soundList;
+
+    public SBMManager() {
+        load();
+    }
+
+    public void load() {
+        boxList = getBoxData();
+        soundList = getSoundData();
+    }
+
+    public void save() {
+
+    }
+
+    public List<Box> getBoxList() {
+        return boxList;
+    }
+
+    public SBMManager setBoxList(List<Box> boxList) {
+        this.boxList = boxList;
+        return this;
+    }
+
+    public List<Sound> getSoundList() {
+        return soundList;
+    }
+
+    public SBMManager setSoundList(List<Sound> soundList) {
+        this.soundList = soundList;
+        return this;
+    }
+
+    private List<Box> getBoxData() {
+        List<Box> list = new ArrayList<>();
+        list.add(new Box().setTitle("Politique").setColor(R.color.RED).setImageResId(R.mipmap.politique));
+        list.add(new Box().setTitle("Insultes").setColor(R.color.YELLOW).setImageResId(R.mipmap.insulte));
+        list.add(new Box().setTitle("Boite à Lopez").setColor(R.color.INDIGO).setImageResId(R.mipmap.lopez));
+        list.add(null);
+        list.add(new Box().setTitle("Armes").setColor(R.color.GREEN).setImageResId(R.mipmap.arme));
+        list.add(new Box().setTitle("Animaux").setColor(R.color.ORANGE).setImageResId(R.mipmap.animaux));
+        list.add(null);
+        return list;
+    }
+
+    private List<Sound> getSoundData() {
 
         List<String> labels_1 = Arrays.asList("rigolo", "fun", "animal");
         List<String> labels_2 = Arrays.asList("rigolo", "fun", "arme");
@@ -71,5 +119,4 @@ public class SoundsDataPump {
 
         return Arrays.asList(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13);
     }
-
 }
