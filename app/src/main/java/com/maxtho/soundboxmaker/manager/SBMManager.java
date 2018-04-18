@@ -1,30 +1,48 @@
 package com.maxtho.soundboxmaker.manager;
 
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.model.entity.Box;
 import com.maxtho.soundboxmaker.model.entity.Sound;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SBMManager {
 
-    private List<Box> boxList;
+    private final String KEY_BOXES = "boxes";
+    private final String KEY_SOUNDS = "sounds";
+    private String TAG = "SBMManager";
+    private Gson gson;
+    private SharedPreferences sharedPreferences;
 
+    private List<Box> boxList;
     private List<Sound> soundList;
 
-    public SBMManager() {
+    public SBMManager(SharedPreferences sharedPreferences, Gson gson) {
+        this.sharedPreferences = sharedPreferences;
+        this.gson = gson;
         load();
     }
 
     public void load() {
+        if (sharedPreferences.getAll().size() == 0) {
+            initData();
+        } else {
+            loadDataFromSharedPreferences();
+        }
         boxList = getBoxData();
         soundList = getSoundData();
     }
 
     public void save() {
-
+        sharedPreferences.edit().putString(KEY_BOXES, gson.toJson(boxList)).commit();
+        sharedPreferences.edit().putString(KEY_SOUNDS, gson.toJson(soundList)).commit();
     }
 
     public List<Box> getBoxList() {
@@ -43,6 +61,23 @@ public class SBMManager {
     public SBMManager setSoundList(List<Sound> soundList) {
         this.soundList = soundList;
         return this;
+    }
+
+    private void initData() {
+        //TODO Populate correctly datas
+        boxList = getBoxData();
+        soundList = getSoundData();
+        sharedPreferences.edit().putString(KEY_BOXES, gson.toJson(boxList)).commit();
+        sharedPreferences.edit().putString(KEY_SOUNDS, gson.toJson(soundList)).commit();
+    }
+
+    private void loadDataFromSharedPreferences() {
+        Type listBoxType = new TypeToken<ArrayList<Box>>() {
+        }.getType();
+        Type listSoundType = new TypeToken<ArrayList<Sound>>() {
+        }.getType();
+        boxList = new Gson().fromJson(sharedPreferences.getString(KEY_BOXES, gson.toJson(getBoxData())), listBoxType);
+        soundList = new Gson().fromJson(sharedPreferences.getString(KEY_SOUNDS, gson.toJson(getSoundData())), listSoundType);
     }
 
     private List<Box> getBoxData() {
