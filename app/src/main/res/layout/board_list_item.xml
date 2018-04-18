@@ -7,23 +7,24 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/board_list_item_root"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/list_item_margin"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_star_border"
-        app:cardBackgroundColor="#6a89cc"
-        app:cardCornerRadius="@dimen/cardview_default_radius">
+        app:cardBackgroundColor="@color/BLUE"
+        app:cardCornerRadius="@dimen/cardview_default_radius"
+        android:elevation="32dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="133dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/board_image"
                 android:scaleType="centerCrop"/>
@@ -53,17 +54,6 @@
                     android:textColor="@android:color/black"/>
 
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/board_favorite"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_star_border"
-                app:layout_constraintRight_toRightOf="@+id/board_image"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

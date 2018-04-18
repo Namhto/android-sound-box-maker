@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.MobileAds;
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.boardtab.BoardFragment;
 import com.maxtho.soundboxmaker.homepage.markettab.MarketFragment;
@@ -17,12 +18,6 @@ public class HomePageActivity extends AppCompatActivity implements
         MarketFragment.OnFragmentInteractionListener,
         BoardFragment.OnFragmentInteractionListener {
 
-    private BoardFragment boardFragment = new BoardFragment();
-
-    private SoundFragment soundFragment = new SoundFragment();
-
-    private MarketFragment marketFragment = new MarketFragment();
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -30,13 +25,13 @@ public class HomePageActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_market:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, marketFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, new MarketFragment()).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, boardFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, new BoardFragment()).commit();
                     return true;
                 case R.id.navigation_sound:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, soundFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.homepage_content, new SoundFragment()).commit();
                     return true;
             }
             return false;
@@ -50,6 +45,8 @@ public class HomePageActivity extends AppCompatActivity implements
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        MobileAds.initialize(this, "YOUR_ADMOB_APP_ID");
     }
 
     @Override

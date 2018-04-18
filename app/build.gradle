@@ -42,5 +42,5 @@ dependencies {
     //circular fab progress
     implementation 'mbanje.kurt:fabbutton:1.2.4@aar'
 
-
+    implementation 'com.google.android.gms:play-services-ads:15.0.0'
 }

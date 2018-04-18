@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,15 +28,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SoundFragment extends Fragment {
 
     @BindView(R.id.rv_categorie_sounds)
     RecyclerView recyclerViewCategorie;
 
-    @BindView(R.id.floatingButton_addSound)
-    FloatingActionButton floatingActionButtonAddSound;
+    private FloatingActionButton fab;
 
     private Context context;
     private OnFragmentInteractionListener mListener;
@@ -67,6 +66,15 @@ public class SoundFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_sound, container, false);
         ButterKnife.bind(this, v);
 
+        fab = getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addSound();
+            }
+        });
+        fab.show();
+
         context = this.getContext();
 
         soundList = SoundsDataPump.getData();
@@ -78,10 +86,14 @@ public class SoundFragment extends Fragment {
         recyclerViewCategorie.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0)
-                    floatingActionButtonAddSound.hide();
-                else if (dy < 0)
-                    floatingActionButtonAddSound.show();
+                if (dy > 0) {
+                    fab.hide();
+                    slideOutNavigationBar();
+                }
+                else if (dy < 0) {
+                    fab.show();
+                    slideInNavigationBar();
+                }
             }
         });
 
@@ -103,6 +115,40 @@ public class SoundFragment extends Fragment {
 
 
         return v;
+    }
+
+    private void slideInNavigationBar() {
+        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+        navigation.clearAnimation();
+        navigation.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
+            @Override
+            public void run() {
+                fab.clearAnimation();
+                fab.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        fab.show();
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void slideOutNavigationBar() {
+        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+        navigation.clearAnimation();
+        navigation.animate().translationY(navigation.getHeight()).setDuration(300).withStartAction(new Runnable() {
+            @Override
+            public void run() {
+                fab.clearAnimation();
+                fab.animate().translationY(navigation.getHeight()).setDuration(300).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        fab.hide();
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
@@ -167,8 +213,7 @@ public class SoundFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    @OnClick(R.id.floatingButton_addSound)
-    public void addSound(View view) {
+    private void addSound() {
         new AddSoundBottomSheetFragment().show(this.getActivity().getSupportFragmentManager(), "Dialog");
     }
 

@@ -13,8 +13,6 @@ public class Board {
 
     private List<Sound> sounds = new ArrayList<>();
 
-    private boolean favorite;
-
     private int color;
 
     private int imageResId = -1;
@@ -34,15 +32,6 @@ public class Board {
 
     public Board setSounds(List<Sound> sounds) {
         this.sounds = sounds;
-        return this;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public Board setFavorite(boolean favorite) {
-        this.favorite = favorite;
         return this;
     }
 

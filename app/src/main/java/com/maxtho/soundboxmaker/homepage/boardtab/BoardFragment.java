@@ -1,51 +1,37 @@
 package com.maxtho.soundboxmaker.homepage.boardtab;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.TextView;
 
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter;
 import com.maxtho.soundboxmaker.model.entity.Board;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter.CONTENT_TYPE;
+
 public class BoardFragment extends Fragment {
 
-    private static final float BOARD_LIST_COLUMN_WIDTH = 100;
-
-    @BindView(R.id.board_list_favorite)
-    GridView boardListFavorite;
-
-    @BindView(R.id.board_list_favorite_empty)
-    TextView boardListFavoriteEmpty;
-
     @BindView(R.id.board_list)
-    GridView boardList;
+    RecyclerView boardList;
 
-    @BindView(R.id.board_scrollview)
-    NestedScrollView boardScrollView;
-
-    @BindView(R.id.board_add_fab)
-    FloatingActionButton boardAddFab;
-
-    private BoardAdapter adapterFavorite;
+    private FloatingActionButton fab;
 
     private BoardAdapter adapter;
 
@@ -65,85 +51,103 @@ public class BoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_board, container, false);
         ButterKnife.bind(this, view);
 
+        fab = getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        });
+        fab.show();
+
         List<Board> list = new ArrayList<>();
-        list.add(new Board().setTitle("Politique").setFavorite(false).setColor(R.color.RED).setImageResId(R.mipmap.politique));
-        list.add(new Board().setTitle("Insultes").setFavorite(false).setColor(R.color.BLUE_GREY));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.BLUE));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.GREEN));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.YELLOW));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.INDIGO));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.PINK));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.LIME));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.TEAL));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.ORANGE));
-        list.add(new Board().setTitle("Bruitage").setFavorite(false).setColor(R.color.GREY));
+        list.add(new Board().setTitle("Politique").setColor(R.color.RED).setImageResId(R.mipmap.politique));
+        list.add(new Board().setTitle("Insultes").setColor(R.color.YELLOW).setImageResId(R.mipmap.insulte));
+        list.add(new Board().setTitle("Boite à Lopez").setColor(R.color.INDIGO).setImageResId(R.mipmap.lopez));
+        list.add(null);
+        list.add(new Board().setTitle("Armes").setColor(R.color.GREEN).setImageResId(R.mipmap.arme));
+        list.add(new Board().setTitle("Animaux").setColor(R.color.ORANGE).setImageResId(R.mipmap.animaux));
+        list.add(null);
 
         populateBoardList(list);
-        configureScrollViewBehavior();
+        configureRecyclerViewBehavior();
         return view;
     }
 
-
-    private void configureScrollViewBehavior() {
-        boardScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+    private void configureRecyclerViewBehavior() {
+        boardList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY - oldScrollY > 0) {
-                    boardAddFab.hide();
-                } else {
-                    boardAddFab.show();
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    slideOutNavigationBar();
+                } else if (dy < 0) {
+                    slideInNavigationBar();
                 }
             }
         });
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                if (viewHolder.getItemViewType() == CONTENT_TYPE) {
+                    return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+                }
+                return makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, final RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Collections.swap(adapter.getItems(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(boardList);
+    }
+
+    private void slideInNavigationBar() {
+        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+        navigation.clearAnimation();
+        navigation.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
+            @Override
+            public void run() {
+                fab.clearAnimation();
+                fab.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        fab.show();
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void slideOutNavigationBar() {
+        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+        navigation.clearAnimation();
+        navigation.animate().translationY(navigation.getHeight()).setDuration(300).withStartAction(new Runnable() {
+            @Override
+            public void run() {
+                fab.clearAnimation();
+                fab.animate().translationY(navigation.getHeight()).setDuration(300).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        fab.hide();
+                    }
+                });
+            }
+        }).start();
     }
 
     private void populateBoardList(List<Board> list) {
-        List<Board> favoriteBoardList = new ArrayList<>();
-        List<Board> otherBoardList = new ArrayList<>();
-        Iterator<Board> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Board board = iterator.next();
-            if (board.isFavorite()) {
-                favoriteBoardList.add(board);
-            } else {
-                otherBoardList.add(board);
-            }
-        }
-
-        adapterFavorite = new BoardAdapter(getContext(), 0, favoriteBoardList);
-        boardListFavorite.setAdapter(adapterFavorite);
-        setGridViewDimensions(boardListFavorite);
-
-        adapter = new BoardAdapter(getContext(), 0, otherBoardList);
+        adapter = new BoardAdapter(getContext(), list);
+        boardList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         boardList.setAdapter(adapter);
-        setGridViewDimensions(boardList);
-
-        if (!favoriteBoardList.isEmpty()) {
-            boardListFavoriteEmpty.setVisibility(View.GONE);
-        }
-    }
-
-    private int convertDpToPixels(float dp, Context context) {
-        Resources resources = context.getResources();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
-    }
-
-    private void setGridViewDimensions(GridView gridView) {
-        if (gridView.getAdapter().getCount() > 0) {
-            DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
-            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-            int gridColumnNumber = (int) Math.floor(dpWidth / BOARD_LIST_COLUMN_WIDTH);
-            gridView.setNumColumns(gridColumnNumber);
-
-            int gridRowNumber = (int) Math.floor(gridView.getAdapter().getCount() / gridColumnNumber) + 1;
-            View listItem = gridView.getAdapter().getView(0, null, gridView);
-            listItem.measure(0, 0);
-
-            ViewGroup.LayoutParams params = gridView.getLayoutParams();
-            params.height = listItem.getMeasuredHeight() * gridRowNumber;
-            gridView.setLayoutParams(params);
-            gridView.requestLayout();
-        }
     }
 
     @Override

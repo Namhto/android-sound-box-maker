@@ -2,9 +2,9 @@
 <resources>
 
     <!-- Theme colors -->
-    <color name="colorPrimary">#8E24AA</color>
-    <color name="colorPrimaryDark">#6A1B9A</color>
-    <color name="colorAccent">#FF6D00</color>
+    <color name="colorPrimary">#303f9f</color>
+    <color name="colorPrimaryDark">#001970</color>
+    <color name="colorAccent">#303f9f</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
@@ -15,7 +15,6 @@
     <color name="PINK">#ec407a</color>
     <color name="INDIGO">#5c6bc0</color>
     <color name="BLUE">#42a5f5</color>
-    <color name="TEAL">#26a69a</color>
     <color name="GREEN">#66bb6a</color>
     <color name="LIME">#d4e157</color>
     <color name="YELLOW">#ffee58</color>
