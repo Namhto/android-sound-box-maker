@@ -13,7 +13,7 @@ import android.view.animation.AnimationUtils;
 
 import com.google.android.gms.ads.AdRequest;
 import com.maxtho.soundboxmaker.R;
-import com.maxtho.soundboxmaker.model.entity.Board;
+import com.maxtho.soundboxmaker.model.entity.Box;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardViewHolder> {
 
     private Context context;
 
-    private List<Board> items;
+    private List<Box> items;
 
     static final int AD_TYPE = 0;
 
@@ -32,7 +32,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardViewHolder> {
 
     private int lastPosition = -1;
 
-    public BoardAdapter(Context context, List<Board> items) {
+    public BoardAdapter(Context context, List<Box> items) {
         this.context = context;
         this.items = items;
     }
@@ -62,9 +62,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardViewHolder> {
             AdRequest adRequest = new AdRequest.Builder().build();
             viewHolder.ad.loadAd(adRequest);
         } else if (viewHolder.getItemViewType() == CONTENT_TYPE) {
-            final Board item = items.get(position);
+            final Box item = items.get(position);
             viewHolder.title.setText(item.getTitle());
-            viewHolder.count.setText(String.valueOf(item.getSounds().size()) + " sounds");
+            //TODO
+            //viewHolder.count.setText(String.valueOf(item.getSounds().size()) + " sounds");
             if (item.getImageResId() != -1) {
                 Drawable drawable = context.getDrawable(item.getImageResId());
                 viewHolder.image.setImageDrawable(drawable);
@@ -89,7 +90,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardViewHolder> {
         return items.size();
     }
 
-    public List<Board> getItems() {
+    public List<Box> getItems() {
         return items;
     }
 }

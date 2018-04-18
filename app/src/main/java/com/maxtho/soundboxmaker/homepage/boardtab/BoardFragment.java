@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.homepage.HomePageActivity;
 import com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter;
-import com.maxtho.soundboxmaker.model.entity.Board;
+import com.maxtho.soundboxmaker.model.entity.Box;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,16 +60,9 @@ public class BoardFragment extends Fragment {
         });
         fab.show();
 
-        List<Board> list = new ArrayList<>();
-        list.add(new Board().setTitle("Politique").setColor(R.color.RED).setImageResId(R.mipmap.politique));
-        list.add(new Board().setTitle("Insultes").setColor(R.color.YELLOW).setImageResId(R.mipmap.insulte));
-        list.add(new Board().setTitle("Boite à Lopez").setColor(R.color.INDIGO).setImageResId(R.mipmap.lopez));
-        list.add(null);
-        list.add(new Board().setTitle("Armes").setColor(R.color.GREEN).setImageResId(R.mipmap.arme));
-        list.add(new Board().setTitle("Animaux").setColor(R.color.ORANGE).setImageResId(R.mipmap.animaux));
-        list.add(null);
+        List<Box> boxList = ((HomePageActivity) getActivity()).sbmManager.getBoxList();
 
-        populateBoardList(list);
+        populateBoardList(boxList);
         configureRecyclerViewBehavior();
         return view;
     }
@@ -144,7 +137,7 @@ public class BoardFragment extends Fragment {
         }).start();
     }
 
-    private void populateBoardList(List<Board> list) {
+    private void populateBoardList(List<Box> list) {
         adapter = new BoardAdapter(getContext(), list);
         boardList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         boardList.setAdapter(adapter);
