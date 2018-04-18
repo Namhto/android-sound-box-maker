@@ -4,7 +4,7 @@
     <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_market">Market</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_soundboxes">Sound boxes</string>
     <string name="title_sound">Sounds</string>
 
     <!-- TODO: Remove or change this placeholder text -->

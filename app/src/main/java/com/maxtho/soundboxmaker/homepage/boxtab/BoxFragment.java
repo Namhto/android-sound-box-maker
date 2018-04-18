@@ -1,4 +1,4 @@
-package com.maxtho.soundboxmaker.homepage.boardtab;
+package com.maxtho.soundboxmaker.homepage.boxtab;
 
 import android.content.Context;
 import android.net.Uri;
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.homepage.HomePageActivity;
-import com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter;
+import com.maxtho.soundboxmaker.homepage.boxtab.adapter.BoxAdapter;
 import com.maxtho.soundboxmaker.model.entity.Box;
 
 import java.util.Collections;
@@ -24,20 +24,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter.CONTENT_TYPE;
+import static com.maxtho.soundboxmaker.homepage.boxtab.adapter.BoxAdapter.CONTENT_TYPE;
 
-public class BoardFragment extends Fragment {
+public class BoxFragment extends Fragment {
 
-    @BindView(R.id.board_list)
-    RecyclerView boardList;
+    @BindView(R.id.box_list)
+    RecyclerView boxList;
 
     private FloatingActionButton fab;
 
-    private BoardAdapter adapter;
+    private BoxAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
-    public BoardFragment() {
+    public BoxFragment() {
         // Required empty public constructor
     }
 
@@ -48,7 +48,7 @@ public class BoardFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_board, container, false);
+        View view = inflater.inflate(R.layout.fragment_box, container, false);
         ButterKnife.bind(this, view);
 
         fab = getActivity().findViewById(R.id.fab);
@@ -64,22 +64,30 @@ public class BoardFragment extends Fragment {
 
         populateBoardList(boxList);
         configureRecyclerViewBehavior();
+        configureBoardDeleteBehavior();
         return view;
     }
 
+    private void configureBoardDeleteBehavior() {
+
+    }
+
     private void configureRecyclerViewBehavior() {
-        boardList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        boxList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
-                    slideOutNavigationBar();
+                    BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+                    fab.clearAnimation();
+                    fab.animate().translationY(navigation.getHeight() * 2).setDuration(300);
                 } else if (dy < 0) {
-                    slideInNavigationBar();
+                    fab.clearAnimation();
+                    fab.animate().translationY(0).setDuration(300);
                 }
             }
         });
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+        ItemTouchHelper.Callback itemTouchHelperCallback = new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 if (viewHolder.getItemViewType() == CONTENT_TYPE) {
@@ -99,48 +107,32 @@ public class BoardFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
             }
-        });
-        itemTouchHelper.attachToRecyclerView(boardList);
-    }
 
-    private void slideInNavigationBar() {
-        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
-        navigation.clearAnimation();
-        navigation.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
             @Override
-            public void run() {
-                fab.clearAnimation();
-                fab.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        fab.show();
-                    }
-                });
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    viewHolder.itemView.animate().scaleX(1.05f).setDuration(200);
+                    viewHolder.itemView.animate().scaleY(1.05f).setDuration(200);
+                }
             }
-        }).start();
-    }
 
-    private void slideOutNavigationBar() {
-        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
-        navigation.clearAnimation();
-        navigation.animate().translationY(navigation.getHeight()).setDuration(300).withStartAction(new Runnable() {
             @Override
-            public void run() {
-                fab.clearAnimation();
-                fab.animate().translationY(navigation.getHeight()).setDuration(300).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        fab.hide();
-                    }
-                });
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                viewHolder.itemView.animate().scaleX(1).setDuration(200);
+                viewHolder.itemView.animate().scaleY(1).setDuration(200);
             }
-        }).start();
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
+        itemTouchHelper.attachToRecyclerView(boxList);
     }
 
     private void populateBoardList(List<Box> list) {
-        adapter = new BoardAdapter(getContext(), list);
-        boardList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        boardList.setAdapter(adapter);
+        adapter = new BoxAdapter(getContext(), list);
+        boxList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        boxList.setAdapter(adapter);
     }
 
     @Override

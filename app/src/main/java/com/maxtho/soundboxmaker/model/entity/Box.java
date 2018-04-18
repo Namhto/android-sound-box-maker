@@ -1,5 +1,7 @@
 package com.maxtho.soundboxmaker.model.entity;
 
+import com.maxtho.soundboxmaker.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +13,11 @@ public class Box {
 
     private String title;
 
+    private int position;
+
     private int color;
 
-    private int imageResId = -1;
+    private int imageResId = R.mipmap.board_default;
 
     private boolean isNative;
 
@@ -61,6 +65,15 @@ public class Box {
 
     public Box setBoardButtons(List<BoxButton> boardButtons) {
         this.boardButtons = boardButtons;
+        return this;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public Box setPosition(int position) {
+        this.position = position;
         return this;
     }
 }

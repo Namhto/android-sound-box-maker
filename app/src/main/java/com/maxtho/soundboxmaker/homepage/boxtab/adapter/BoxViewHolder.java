@@ -1,22 +1,23 @@
-package com.maxtho.soundboxmaker.homepage.boardtab.adapter;
+package com.maxtho.soundboxmaker.homepage.boxtab.adapter;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdView;
 import com.maxtho.soundboxmaker.R;
 
-import static com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter.AD_TYPE;
-import static com.maxtho.soundboxmaker.homepage.boardtab.adapter.BoardAdapter.CONTENT_TYPE;
+import static com.maxtho.soundboxmaker.homepage.boxtab.adapter.BoxAdapter.AD_TYPE;
+import static com.maxtho.soundboxmaker.homepage.boxtab.adapter.BoxAdapter.CONTENT_TYPE;
 
 /**
  * Created by Othman on 16/04/2018.
  */
 
-public class BoardViewHolder extends RecyclerView.ViewHolder {
+public class BoxViewHolder extends RecyclerView.ViewHolder {
 
     public TextView title;
 
@@ -26,9 +27,13 @@ public class BoardViewHolder extends RecyclerView.ViewHolder {
 
     public CardView root;
 
+    public ImageView edit;
+
+    public FrameLayout editContainer;
+
     public AdView ad;
 
-    public BoardViewHolder(View itemView, int viewType) {
+    public BoxViewHolder(View itemView, int viewType) {
         super(itemView);
         if (viewType == AD_TYPE) {
             ad = itemView.findViewById(R.id.board_ad_view);
@@ -37,6 +42,8 @@ public class BoardViewHolder extends RecyclerView.ViewHolder {
             count = itemView.findViewById(R.id.board_count);
             image = itemView.findViewById(R.id.board_image);
             root = itemView.findViewById(R.id.board_list_item_root);
+            edit = itemView.findViewById(R.id.board_edit);
+            editContainer = itemView.findViewById(R.id.board_edit_container);
         }
     }
 }

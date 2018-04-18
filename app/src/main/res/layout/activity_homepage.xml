@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:background="@color/GREY"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigation"
         app:layout_constraintTop_toTopOf="parent">
 
     </LinearLayout>

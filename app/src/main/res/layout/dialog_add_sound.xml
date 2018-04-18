@@ -31,12 +31,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/fab_margin"
-            android:tint="#757575"
+            android:tint="@color/colorPrimary"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_folder" />
+            app:srcCompat="@drawable/ic_folder"/>
 
         <TextView
             android:id="@+id/textView2"
@@ -77,7 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/fab_margin"
-            android:tint="#757575"
+            android:tint="@color/colorPrimary"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +123,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/fab_margin"
-            android:tint="#757575"
+            android:tint="@color/colorPrimary"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

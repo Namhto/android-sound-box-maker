@@ -47,13 +47,14 @@ public class SBMManager {
 
     private List<Box> getBoxData() {
         List<Box> list = new ArrayList<>();
-        list.add(new Box().setTitle("Politique").setColor(R.color.RED).setImageResId(R.mipmap.politique));
-        list.add(new Box().setTitle("Insultes").setColor(R.color.YELLOW).setImageResId(R.mipmap.insulte));
-        list.add(new Box().setTitle("Boite à Lopez").setColor(R.color.INDIGO).setImageResId(R.mipmap.lopez));
-        list.add(null);
-        list.add(new Box().setTitle("Armes").setColor(R.color.GREEN).setImageResId(R.mipmap.arme));
-        list.add(new Box().setTitle("Animaux").setColor(R.color.ORANGE).setImageResId(R.mipmap.animaux));
-        list.add(null);
+        list.add(new Box().setTitle("Politique").setColor(R.color.RED).setImageResId(R.mipmap.politique).setNative(true));
+        list.add(new Box().setTitle("Insultes").setColor(R.color.YELLOW).setImageResId(R.mipmap.insulte).setNative(true));
+        list.add(new Box().setTitle("Boite à Lopez").setColor(R.color.INDIGO).setImageResId(R.mipmap.lopez).setNative(true));
+        list.add(new Box().setTitle("Armes").setColor(R.color.GREEN).setImageResId(R.mipmap.arme).setNative(true));
+        list.add(new Box().setTitle("Animaux").setColor(R.color.ORANGE).setImageResId(R.mipmap.animaux).setNative(true));
+        list.add(new Box().setTitle("Ma boite à son").setColor(R.color.BLUE_GREY).setNative(false));
+        list.add(new Box().setTitle("Sound box de bogoss").setColor(R.color.LIME).setNative(false));
+        list.add(new Box().setTitle("Cake").setColor(R.color.PINK).setNative(false));
         return list;
     }
 

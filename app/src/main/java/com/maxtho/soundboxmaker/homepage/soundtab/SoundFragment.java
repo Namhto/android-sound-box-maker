@@ -89,12 +89,12 @@ public class SoundFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
-                    fab.hide();
-                    slideOutNavigationBar();
-                }
-                else if (dy < 0) {
-                    fab.show();
-                    slideInNavigationBar();
+                    BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
+                    fab.clearAnimation();
+                    fab.animate().translationY(navigation.getHeight() * 2).setDuration(300);
+                } else if (dy < 0) {
+                    fab.clearAnimation();
+                    fab.animate().translationY(0).setDuration(300);
                 }
             }
         });
@@ -117,40 +117,6 @@ public class SoundFragment extends Fragment {
 
 
         return v;
-    }
-
-    private void slideInNavigationBar() {
-        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
-        navigation.clearAnimation();
-        navigation.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
-            @Override
-            public void run() {
-                fab.clearAnimation();
-                fab.animate().translationY(0).setDuration(300).withStartAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        fab.show();
-                    }
-                });
-            }
-        }).start();
-    }
-
-    private void slideOutNavigationBar() {
-        final BottomNavigationView navigation = getActivity().findViewById(R.id.navigation);
-        navigation.clearAnimation();
-        navigation.animate().translationY(navigation.getHeight()).setDuration(300).withStartAction(new Runnable() {
-            @Override
-            public void run() {
-                fab.clearAnimation();
-                fab.animate().translationY(navigation.getHeight()).setDuration(300).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        fab.hide();
-                    }
-                });
-            }
-        }).start();
     }
 
     @Override
