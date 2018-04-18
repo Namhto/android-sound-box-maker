@@ -18,8 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.homepage.HomePageActivity;
 import com.maxtho.soundboxmaker.homepage.soundtab.adapter.SoundAdapter;
-import com.maxtho.soundboxmaker.homepage.soundtab.data.SoundsDataPump;
 import com.maxtho.soundboxmaker.homepage.soundtab.fragment.AddSoundBottomSheetFragment;
 import com.maxtho.soundboxmaker.model.entity.Sound;
 
@@ -30,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SoundFragment extends Fragment {
+
+    private String TAG = "SoundFragment";
 
     @BindView(R.id.rv_categorie_sounds)
     RecyclerView recyclerViewCategorie;
@@ -77,7 +79,7 @@ public class SoundFragment extends Fragment {
 
         context = this.getContext();
 
-        soundList = SoundsDataPump.getData();
+        soundList = ((HomePageActivity) getActivity()).sbmManager.getSoundList();
 
         recyclerViewCategorie.setLayoutManager(new LinearLayoutManager(getContext()));
         categorieRecycleViewAdapter = new SoundAdapter(this.getContext(), soundList);
