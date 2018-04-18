@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.google.android.gms.ads.MobileAds;
-import com.maxtho.soundboxmaker.Injector;
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.SBMApplication;
 import com.maxtho.soundboxmaker.homepage.boxtab.BoxFragment;
 import com.maxtho.soundboxmaker.homepage.markettab.MarketFragment;
 import com.maxtho.soundboxmaker.homepage.soundtab.SoundFragment;
@@ -56,7 +56,7 @@ public class HomePageActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        Injector.getInstance().getAppComponent().inject(this);
+        ((SBMApplication) getApplication()).component().inject(this);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
