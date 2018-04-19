@@ -101,6 +101,7 @@ public class SBMManager {
                 .setName("Cri")
                 .setSoundReference("" + R.raw.cri)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez1.getId(), sLopez1);
 
@@ -109,6 +110,7 @@ public class SBMManager {
                 .setName("Hey Hofman")
                 .setSoundReference("" + R.raw.hehofman)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez2.getId(), sLopez2);
 
@@ -117,6 +119,7 @@ public class SBMManager {
                 .setName("Je vais vous...")
                 .setSoundReference("" + R.raw.jvaisvousenculer)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez3.getId(), sLopez3);
 
@@ -125,6 +128,7 @@ public class SBMManager {
                 .setName("La calotte")
                 .setSoundReference("" + R.raw.lacalote)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez4.getId(), sLopez4);
 
@@ -133,6 +137,7 @@ public class SBMManager {
                 .setName("Lopez de vos morts")
                 .setSoundReference("" + R.raw.lopezdevosmorts)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez5.getId(), sLopez5);
 
@@ -141,6 +146,7 @@ public class SBMManager {
                 .setName("Ta femme")
                 .setSoundReference("" + R.raw.tafemme)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez6.getId(), sLopez6);
 
@@ -149,6 +155,7 @@ public class SBMManager {
                 .setName("Viens la toi")
                 .setSoundReference("" + R.raw.vienslatoi)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez7.getId(), sLopez7);
 
@@ -157,6 +164,7 @@ public class SBMManager {
                 .setName("Viens on va en finir")
                 .setSoundReference("" + R.raw.viensonvaenfinir)
                 .setDefault(true)
+                .setColor(R.color.INDIGO)
                 .setLabels(labels_lopez);
         soundMap.put(sLopez8.getId(), sLopez8);
 
@@ -184,6 +192,7 @@ public class SBMManager {
                 .setName(".45")
                 .setSoundReference("" + R.raw.quarantecinq)
                 .setDefault(true)
+                .setColor(R.color.GREEN)
                 .setLabels(labels_gun);
         soundMap.put(sGun1.getId(), sGun1);
         List<BoxButton> soundBoxesGunList = new ArrayList<>();
@@ -202,6 +211,7 @@ public class SBMManager {
                 .setName("Poule")
                 .setSoundReference("" + R.raw.poulepondeuse)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sPoule.getId(), sPoule);
 
@@ -210,6 +220,7 @@ public class SBMManager {
                 .setName("Bonobo")
                 .setSoundReference("" + R.raw.bonobo)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sBonobo.getId(), sBonobo);
 
@@ -218,6 +229,7 @@ public class SBMManager {
                 .setName("Bouc")
                 .setSoundReference("" + R.raw.bouc)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sBouc.getId(), sBouc);
 
@@ -226,6 +238,7 @@ public class SBMManager {
                 .setName("Chevre")
                 .setSoundReference("" + R.raw.chevre)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sChevre.getId(), sChevre);
 
@@ -234,6 +247,7 @@ public class SBMManager {
                 .setName("Chimpanze")
                 .setSoundReference("" + R.raw.chimpanze)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sChimpanze.getId(), sChimpanze);
 
@@ -242,6 +256,7 @@ public class SBMManager {
                 .setName("Coq")
                 .setSoundReference("" + R.raw.coq)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sCoq.getId(), sCoq);
 
@@ -250,6 +265,7 @@ public class SBMManager {
                 .setName("Croco")
                 .setSoundReference("" + R.raw.croco)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sCroco.getId(), sCroco);
 
@@ -258,6 +274,7 @@ public class SBMManager {
                 .setName("Lion")
                 .setSoundReference("" + R.raw.lion)
                 .setDefault(true)
+                .setColor(R.color.ORANGE)
                 .setLabels(labels_animal);
         soundMap.put(sLion.getId(), sLion);
 

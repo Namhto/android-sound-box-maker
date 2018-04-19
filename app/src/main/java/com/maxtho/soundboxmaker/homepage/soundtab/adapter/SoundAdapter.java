@@ -45,6 +45,21 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundViewHolder> {
                 if (mp != null) mp.stop();
                 mp = MediaPlayer.create(view.getContext(), Integer.parseInt(sound.getSoundReference()));
                 mp.start();
+                /*
+                if(mp != null)mp.stop();
+                if (s.isDefault()) {
+                    mp = MediaPlayer.create(context, Integer.parseInt(s.getSoundReference()));
+                } else {
+                    try {
+                        mp.setDataSource(s.getSoundReference());
+                        mp.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mp.start();
+                return false;
+        */
             }
         });
     }
@@ -52,6 +67,10 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundViewHolder> {
     @Override
     public int getItemCount() {
         return soundList.size();
+    }
+
+    public List<Sound> getItems() {
+        return soundList;
     }
 
     public SoundAdapter setSoundList(List<Sound> soundList) {

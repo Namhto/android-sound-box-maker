@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,14 +34,14 @@ public class SoundFragment extends Fragment {
     private String TAG = "SoundFragment";
 
     @BindView(R.id.rv_categorie_sounds)
-    RecyclerView recyclerViewCategorie;
+    RecyclerView recyclerViewSounds;
 
     private FloatingActionButton fab;
 
     private Context context;
     private OnFragmentInteractionListener mListener;
 
-    private SoundAdapter categorieRecycleViewAdapter;
+    private SoundAdapter soundsRecycleViewAdapter;
 
     private List<Sound> soundList;
 
@@ -78,15 +78,25 @@ public class SoundFragment extends Fragment {
         fab.show();
 
         context = this.getContext();
-
         soundList = new ArrayList<>();
+
         soundList.addAll(((HomePageActivity) getActivity()).sbmManager.getSoundMap().values());
 
-        recyclerViewCategorie.setLayoutManager(new LinearLayoutManager(getContext()));
-        categorieRecycleViewAdapter = new SoundAdapter(this.getContext(), soundList);
-        recyclerViewCategorie.setAdapter(categorieRecycleViewAdapter);
+        populateSoundsList();
+        configureRecyclerViewBehavior();
 
-        recyclerViewCategorie.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        return v;
+    }
+
+    private void populateSoundsList() {
+        //recyclerViewSounds.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewSounds.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        soundsRecycleViewAdapter = new SoundAdapter(this.getContext(), soundList);
+        recyclerViewSounds.setAdapter(soundsRecycleViewAdapter);
+    }
+
+    private void configureRecyclerViewBehavior() {
+        recyclerViewSounds.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
@@ -99,25 +109,6 @@ public class SoundFragment extends Fragment {
                 }
             }
         });
-
-/*
-                if(mp != null)mp.stop();
-                if (s.isDefault()) {
-                    mp = MediaPlayer.create(context, Integer.parseInt(s.getSoundReference()));
-                } else {
-                    try {
-                        mp.setDataSource(s.getSoundReference());
-                        mp.prepare();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                mp.start();
-                return false;
-        */
-
-
-        return v;
     }
 
     @Override
@@ -166,7 +157,7 @@ public class SoundFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String s) {
                 final List<Sound> filteredList = filter(soundList, s);
-                categorieRecycleViewAdapter.setSoundList(filteredList);
+                soundsRecycleViewAdapter.setSoundList(filteredList);
                 return true;
             }
         });

@@ -14,6 +14,8 @@ public class Sound {
 
     private List<String> labels;
 
+    private int color;
+
     public String getName() {
         return name;
     }
@@ -56,6 +58,15 @@ public class Sound {
 
     public Sound setLabels(List<String> labels) {
         this.labels = labels;
+        return this;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public Sound setColor(int color) {
+        this.color = color;
         return this;
     }
 }
