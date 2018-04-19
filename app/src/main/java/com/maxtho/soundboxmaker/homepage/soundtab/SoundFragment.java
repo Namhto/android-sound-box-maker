@@ -79,7 +79,8 @@ public class SoundFragment extends Fragment {
 
         context = this.getContext();
 
-        soundList = ((HomePageActivity) getActivity()).sbmManager.getSoundList();
+        soundList = new ArrayList<>();
+        soundList.addAll(((HomePageActivity) getActivity()).sbmManager.getSoundMap().values());
 
         recyclerViewCategorie.setLayoutManager(new LinearLayoutManager(getContext()));
         categorieRecycleViewAdapter = new SoundAdapter(this.getContext(), soundList);

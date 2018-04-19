@@ -1,12 +1,10 @@
 package com.maxtho.soundboxmaker.model.entity;
 
-import java.util.List;
-
 public class BoxButton {
 
     private int position;
 
-    private List<String> SoundReferences;
+    private String SoundReference;
 
     public int getPosition() {
         return position;
@@ -17,12 +15,12 @@ public class BoxButton {
         return this;
     }
 
-    public List<String> getSoundReferences() {
-        return SoundReferences;
+    public String getSoundReference() {
+        return SoundReference;
     }
 
-    public BoxButton setSoundReferences(List<String> soundReferences) {
-        SoundReferences = soundReferences;
+    public BoxButton setSoundReference(String soundReference) {
+        SoundReference = soundReference;
         return this;
     }
 }

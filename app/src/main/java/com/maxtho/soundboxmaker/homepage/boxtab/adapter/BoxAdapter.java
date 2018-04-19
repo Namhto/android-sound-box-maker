@@ -57,8 +57,7 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxViewHolder> {
         } else if (viewHolder.getItemViewType() == CONTENT_TYPE) {
             final Box item = items.get(position);
             viewHolder.title.setText(item.getTitle());
-            //TODO
-            //viewHolder.count.setText(String.valueOf(item.getSounds().size()) + " sounds");
+            viewHolder.count.setText(String.valueOf(item.getBoardButtons().size()) + " sounds");
             viewHolder.image.setImageDrawable(context.getDrawable(item.getImageResId()));
             viewHolder.root.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), item.getColor(), null));
             if (item.isNative()) {
