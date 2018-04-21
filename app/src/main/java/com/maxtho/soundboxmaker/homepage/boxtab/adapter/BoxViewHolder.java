@@ -27,9 +27,7 @@ public class BoxViewHolder extends RecyclerView.ViewHolder {
 
     public CardView root;
 
-    public ImageView edit;
-
-    public FrameLayout editContainer;
+    public FrameLayout edit;
 
     public AdView ad;
 
@@ -43,7 +41,6 @@ public class BoxViewHolder extends RecyclerView.ViewHolder {
             image = itemView.findViewById(R.id.board_image);
             root = itemView.findViewById(R.id.board_list_item_root);
             edit = itemView.findViewById(R.id.board_edit);
-            editContainer = itemView.findViewById(R.id.board_edit_container);
         }
     }
 }

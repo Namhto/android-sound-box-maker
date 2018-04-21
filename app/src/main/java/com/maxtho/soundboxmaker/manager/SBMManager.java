@@ -6,6 +6,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.maxtho.soundboxmaker.R;
+import com.maxtho.soundboxmaker.exception.ExceptionCode;
+import com.maxtho.soundboxmaker.exception.SBMException;
 import com.maxtho.soundboxmaker.model.entity.Box;
 import com.maxtho.soundboxmaker.model.entity.BoxButton;
 import com.maxtho.soundboxmaker.model.entity.Sound;
@@ -301,12 +303,12 @@ public class SBMManager {
                 .setColor(R.color.RED)
                 .setImageResId(R.mipmap.politique)
                 .setNative(true));
-        boxList.add(new Box()
+        /*boxList.add(new Box()
                 .setTitle("Insultes")
                 .setColor(R.color.YELLOW)
                 .setImageResId(R.mipmap.insulte)
                 .setNative(true)
-        );
+        );*/
         boxList.add(new Box()
                 .setTitle("Ma boite à son")
                 .setColor(R.color.BLUE_GREY)
@@ -322,4 +324,12 @@ public class SBMManager {
 
     }
 
+    public Box getBoxByTitle(String title) {
+        for (Box box : boxList) {
+            if (box.getTitle().equals(title)) {
+                return box;
+            }
+        }
+        throw new SBMException(ExceptionCode.BOX_NOT_FOUND);
+    }
 }

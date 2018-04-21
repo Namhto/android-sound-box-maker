@@ -12,14 +12,33 @@
 
     <!-- Box colors -->
     <color name="RED">#ef5350</color>
+    <color name="RED_DARK">#bf4240</color>
+
     <color name="PINK">#ec407a</color>
+    <color name="PINK_DARK">#bc3361</color>
+
     <color name="INDIGO">#5c6bc0</color>
+    <color name="INDIGO_DARK">#495599</color>
+
     <color name="BLUE">#42a5f5</color>
+    <color name="BLUE_DARK">#3484c4</color>
+
     <color name="GREEN">#66bb6a</color>
+    <color name="GREEN_DARK">#519554</color>
+
     <color name="LIME">#d4e157</color>
+    <color name="LIME_DARK">#a9b445</color>
+
     <color name="YELLOW">#ffee58</color>
+    <color name="YELLOW_DARK">#ccbe46</color>
+
     <color name="ORANGE">#ffa726</color>
+    <color name="ORANGE_DARK">#cc851e</color>
+
     <color name="GREY">#e0e0e0</color>
+    <color name="GREY_DARK">#b3b3b3</color>
+
     <color name="BLUE_GREY">#90a4ae</color>
+    <color name="BLUE_GREY_DARK">#73838b</color>
 
 </resources>

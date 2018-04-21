@@ -23,15 +23,18 @@
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".homepage.HomePageActivity"
-            android:label="@string/title_activity_main"></activity>
+            android:label="@string/title_activity_main" />
         <activity
             android:name=".splashscreen.SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".homepage.boxtab.activity.BoxActivity" />
+        <activity android:name=".homepage.boxtab.activity.BoxEditActivity"></activity>
     </application>
 
 </manifest>

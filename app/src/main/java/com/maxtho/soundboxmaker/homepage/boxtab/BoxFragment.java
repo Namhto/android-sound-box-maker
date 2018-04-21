@@ -61,15 +61,17 @@ public class BoxFragment extends Fragment {
         fab.show();
 
         List<Box> boxList = ((HomePageActivity) getActivity()).sbmManager.getBoxList();
-
         populateBoardList(boxList);
+
         configureRecyclerViewBehavior();
-        configureBoardDeleteBehavior();
+
         return view;
     }
 
-    private void configureBoardDeleteBehavior() {
-
+    private void populateBoardList(List<Box> list) {
+        adapter = new BoxAdapter(getActivity(), list);
+        boxList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        boxList.setAdapter(adapter);
     }
 
     private void configureRecyclerViewBehavior() {
@@ -127,12 +129,6 @@ public class BoxFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
         itemTouchHelper.attachToRecyclerView(boxList);
-    }
-
-    private void populateBoardList(List<Box> list) {
-        adapter = new BoxAdapter(getContext(), list);
-        boxList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        boxList.setAdapter(adapter);
     }
 
     @Override
