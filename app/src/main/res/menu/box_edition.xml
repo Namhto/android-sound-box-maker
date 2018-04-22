@@ -5,7 +5,7 @@
     tools:context=".homepage.boxtab.activity.BoxEditActivity">
     <item
         android:id="@+id/action_box_edition_save"
-        android:icon="@drawable/ic_done_black"
+        android:icon="@drawable/ic_done"
         android:title="Save changes"
         app:showAsAction="always"/>
 </menu>

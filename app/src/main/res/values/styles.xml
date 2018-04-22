@@ -4,67 +4,68 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
-    <style name="RED" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="RED" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/RED</item>
         <item name="colorPrimaryDark">@color/RED_DARK</item>
         <item name="colorAccent">@color/RED</item>
     </style>
 
-    <style name="PINK" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="PINK" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/PINK</item>
         <item name="colorPrimaryDark">@color/PINK_DARK</item>
         <item name="colorAccent">@color/PINK</item>
     </style>
 
-    <style name="INDIGO" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="INDIGO" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/INDIGO</item>
         <item name="colorPrimaryDark">@color/INDIGO_DARK</item>
         <item name="colorAccent">@color/INDIGO</item>
     </style>
 
-    <style name="BLUE" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BLUE" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/BLUE</item>
         <item name="colorPrimaryDark">@color/BLUE_DARK</item>
         <item name="colorAccent">@color/BLUE</item>
     </style>
 
-    <style name="GREEN" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="GREEN" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/GREEN</item>
         <item name="colorPrimaryDark">@color/GREEN_DARK</item>
         <item name="colorAccent">@color/GREEN</item>
     </style>
 
-    <style name="LIME" parent="Theme.AppCompat.Light">
+    <style name="LIME" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/LIME</item>
         <item name="colorPrimaryDark">@color/LIME_DARK</item>
         <item name="colorAccent">@color/LIME</item>
     </style>
 
-    <style name="YELLOW" parent="Theme.AppCompat.Light">
+    <style name="YELLOW" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/YELLOW</item>
         <item name="colorPrimaryDark">@color/YELLOW_DARK</item>
         <item name="colorAccent">@color/YELLOW</item>
     </style>
 
-    <style name="ORANGE" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ORANGE" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/ORANGE</item>
         <item name="colorPrimaryDark">@color/ORANGE_DARK</item>
         <item name="colorAccent">@color/ORANGE</item>
     </style>
 
-    <style name="GREY" parent="Theme.AppCompat.Light">
+    <style name="GREY" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/GREY</item>
         <item name="colorPrimaryDark">@color/GREY_DARK</item>
         <item name="colorAccent">@color/GREY</item>
     </style>
 
-    <style name="BLUE_GREY" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BLUE_GREY" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/BLUE_GREY</item>
         <item name="colorPrimaryDark">@color/BLUE_GREY_DARK</item>
         <item name="colorAccent">@color/BLUE_GREY</item>

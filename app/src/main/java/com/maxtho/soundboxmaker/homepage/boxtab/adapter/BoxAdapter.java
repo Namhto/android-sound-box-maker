@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -89,7 +90,7 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxViewHolder> {
                         v.getLocationOnScreen(loc_int);
                         int x = loc_int[0] + 20;
                         int y = loc_int[1] + 20;
-                        popupWindow.showAtLocation(layout, Gravity.TOP | Gravity.START,  x, y);
+                        popupWindow.showAtLocation(layout, Gravity.TOP | Gravity.START, x, y);
 
                         layout.findViewById(R.id.board_edit_button).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -113,9 +114,9 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, BoxActivity.class);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, viewHolder.root, context.getString(R.string.transition_string));
                     intent.putExtra("boxTitle", item.getTitle());
-                    context.startActivity(intent);
-                    context.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    context.startActivity(intent, options.toBundle());
                 }
             });
         }
