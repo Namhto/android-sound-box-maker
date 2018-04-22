@@ -58,7 +58,7 @@ public class BoxActivity extends AppCompatActivity {
     }
 
     private void terminate() {
-        this.finish();
+        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 

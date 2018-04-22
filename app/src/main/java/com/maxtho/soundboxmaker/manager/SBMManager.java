@@ -303,12 +303,12 @@ public class SBMManager {
                 .setColor(R.color.RED)
                 .setImageResId(R.mipmap.politique)
                 .setNative(true));
-        /*boxList.add(new Box()
+        boxList.add(new Box()
                 .setTitle("Insultes")
                 .setColor(R.color.YELLOW)
                 .setImageResId(R.mipmap.insulte)
                 .setNative(true)
-        );*/
+        );
         boxList.add(new Box()
                 .setTitle("Ma boite à son")
                 .setColor(R.color.BLUE_GREY)
