@@ -1,13 +1,13 @@
 package com.maxtho.soundboxmaker.homepage.boxtab.activity;
 
 import android.content.res.ColorStateList;
+import android.graphics.Canvas;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,8 +15,13 @@ import android.widget.Toast;
 
 import com.maxtho.soundboxmaker.R;
 import com.maxtho.soundboxmaker.SBMApplication;
+import com.maxtho.soundboxmaker.homepage.boxtab.adapter.BoxButtonAdapter;
 import com.maxtho.soundboxmaker.manager.SBMManager;
 import com.maxtho.soundboxmaker.model.entity.Box;
+import com.maxtho.soundboxmaker.model.entity.BoxButton;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,22 +35,18 @@ public class BoxActivity extends AppCompatActivity {
 
     private Box box;
 
-    @BindView(R.id.box_toolbar_image)
-    public ImageView boxToolBarImage;
-
-    @BindView(R.id.box_toolbar_container)
-    public CollapsingToolbarLayout boxToolBarContainer;
+    private BoxButtonAdapter adapter;
 
     @BindView(R.id.box_fab_button_add)
-    public FloatingActionButton boxFabButtonAdd;
+    public FloatingActionButton fab;
 
-    @BindView(R.id.box_anim_toolbar)
-    public Toolbar boxAnimToolBar;
+    @BindView(R.id.button_list)
+    public RecyclerView buttonList;
 
-    @BindView(R.id.box_app_bar)
-    public AppBarLayout boxAppBar;
+    @BindView(R.id.button_list_item_delete)
+    public ImageView buttonDelete;
 
-    private MenuItem addButtonMenuItem;
+    private boolean isDeleteRequested = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,45 +56,115 @@ public class BoxActivity extends AppCompatActivity {
         ButterKnife.bind(this, view);
 
         ((SBMApplication) getApplication()).component().inject(this);
-        box = sbmManager.getBoxByTitle(getIntent().getStringExtra("boxTitle"));
+        box = sbmManager.getBoxById(getIntent().getStringExtra("boxId"));
 
         setTheme(getThemeIdByColor(box.getColor()));
+        setTitle(box.getTitle());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        buttonDelete.setVisibility(View.INVISIBLE);
+
         setContentView(view);
 
-        configureToolBar();
-        configureCollapsingToolBarLayout();
-        configureToolBarImage();
         configureFab();
+        populateBoardList(box.getBoxButtons());
+        configureRecyclerViewBehavior();
+    }
 
-        boxAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+    private void populateBoardList(List<BoxButton> list) {
+        adapter = new BoxButtonAdapter(this, list);
+        buttonList.setLayoutManager(new GridLayoutManager(this, 2));
+        buttonList.setAdapter(adapter);
+    }
+
+    private void configureRecyclerViewBehavior() {
+        buttonList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                invalidateOptionsMenu();
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    fab.clearAnimation();
+                    fab.animate().translationY(fab.getHeight() * 2).setDuration(300);
+                } else if (dy < 0) {
+                    fab.clearAnimation();
+                    fab.animate().translationY(0).setDuration(300);
+                }
             }
         });
-    }
+        ItemTouchHelper.Callback itemTouchHelperCallback = new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+            }
 
-    private void configureToolBar() {
-        setSupportActionBar(boxAnimToolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+            @Override
+            public boolean onMove(RecyclerView recyclerView, final RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Collections.swap(adapter.getItems(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
 
-    private void configureCollapsingToolBarLayout() {
-        boxToolBarContainer.setTitle(box.getTitle());
-        boxToolBarContainer.setContentScrimColor(getResources().getColor(box.getColor()));
-    }
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
-    private void configureToolBarImage() {
-        boxToolBarImage.setImageDrawable(getDrawable(box.getImageResId()));
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    viewHolder.itemView.animate().scaleX(1.05f).setDuration(250);
+                    viewHolder.itemView.animate().scaleY(1.05f).setDuration(250);
+                    buttonDelete.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, final RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                if (isDeleteRequested) {
+                    viewHolder.itemView.animate().scaleX(0).setDuration(250);
+                    viewHolder.itemView.animate().scaleY(0).setDuration(250).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.getItems().remove(viewHolder.getAdapterPosition());
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+                else {
+                    viewHolder.itemView.animate().scaleX(1).setDuration(250);
+                    viewHolder.itemView.animate().scaleY(1).setDuration(250);
+                }
+                buttonDelete.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                if (viewHolder.itemView.getY() + viewHolder.itemView.getHeight() < buttonDelete.getBottom()) {
+                    buttonDelete.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.RED_DARK)));
+                    buttonDelete.setImageDrawable(getDrawable(R.drawable.ic_delete_open));
+                    isDeleteRequested = true;
+                }
+                else {
+                    buttonDelete.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.black)));
+                    buttonDelete.setImageDrawable(getDrawable(R.drawable.ic_delete));
+                    if (isCurrentlyActive) {
+                        isDeleteRequested = false;
+                    }
+                }
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
+        itemTouchHelper.attachToRecyclerView(buttonList);
     }
 
     private void configureFab() {
         if (box.isNative()) {
-            boxFabButtonAdd.setVisibility(View.GONE);
-        }
-        else {
-            boxFabButtonAdd.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(box.getColor())));
-            boxFabButtonAdd.setOnClickListener(new View.OnClickListener() {
+            fab.setVisibility(View.GONE);
+        } else {
+            fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(box.getColor())));
+            fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     addButton();
@@ -120,8 +191,6 @@ public class BoxActivity extends AppCompatActivity {
                 return R.style.YELLOW;
             case R.color.ORANGE:
                 return R.style.ORANGE;
-            case R.color.GREY:
-                return R.style.GREY;
             case R.color.BLUE_GREY:
                 return R.style.BLUE_GREY;
             default:
@@ -148,7 +217,8 @@ public class BoxActivity extends AppCompatActivity {
     }
 
     private void terminate() {
-        supportFinishAfterTransition();
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
     @Override
@@ -156,24 +226,11 @@ public class BoxActivity extends AppCompatActivity {
         terminate();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!box.isNative()) {
-            getMenuInflater().inflate(R.menu.box_add_button, menu);
-            addButtonMenuItem = menu.findItem(R.id.action_box_button_add);
-        }
-        return true;
+    public Box getBox() {
+        return box;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!box.isNative()) {
-            if (boxAppBar.getHeight() - boxAppBar.getBottom() == 0) {
-                addButtonMenuItem.setVisible(false).setEnabled(false);
-            } else {
-                addButtonMenuItem.setVisible(true).setEnabled(true);
-            }
-        }
-        return super.onPrepareOptionsMenu(menu);
+    public SBMManager getSbmManager() {
+        return sbmManager;
     }
 }

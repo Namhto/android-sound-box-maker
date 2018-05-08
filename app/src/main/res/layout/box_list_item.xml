@@ -13,7 +13,6 @@
         android:elevation="32dp"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_star_border"
         app:cardBackgroundColor="@color/BLUE"
         app:cardCornerRadius="@dimen/cardview_default_radius">
 
@@ -26,7 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:transitionName="@string/transition_string"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView

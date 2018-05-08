@@ -1,9 +1,7 @@
 package com.maxtho.soundboxmaker.homepage.boxtab.activity;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,9 +22,6 @@ public class BoxEditActivity extends AppCompatActivity {
 
     @Inject
     public SBMManager sbmManager;
-
-    @BindView(R.id.box_toolbar_edit)
-    Toolbar boxToolBarEdit;
 
     @BindView(R.id.box_title_edit)
     EditText boxTitleEdit;
@@ -52,13 +47,11 @@ public class BoxEditActivity extends AppCompatActivity {
         ButterKnife.bind(this, view);
 
         ((SBMApplication) getApplication()).component().inject(this);
-        box = sbmManager.getBoxByTitle(getIntent().getStringExtra("boxTitle"));
+        box = sbmManager.getBoxById(getIntent().getStringExtra("boxId"));
         selectedColor = box.getColor();
         setTitle("Board Edition");
         setTheme(getThemeIdByColor(box.getColor()));
-        setSupportActionBar(boxToolBarEdit);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(box.getColor())));
 
         setContentView(view);
 
@@ -108,8 +101,6 @@ public class BoxEditActivity extends AppCompatActivity {
                 return R.style.YELLOW;
             case R.color.ORANGE:
                 return R.style.ORANGE;
-            case R.color.GREY:
-                return R.style.GREY;
             case R.color.BLUE_GREY:
                 return R.style.BLUE_GREY;
             default:

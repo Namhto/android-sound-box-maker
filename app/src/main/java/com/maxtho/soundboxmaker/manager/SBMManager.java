@@ -15,6 +15,7 @@ import com.maxtho.soundboxmaker.model.entity.Sound;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +29,8 @@ public class SBMManager {
     private Gson gson;
     private SharedPreferences sharedPreferences;
 
-    private List<Box> boxList;
-    private Map<String, Sound> soundMap;
+    private HashMap<String, Sound> soundMap = new HashMap<>();
+    private HashMap<String, Box> boxMap = new HashMap<>();
 
     public SBMManager(SharedPreferences sharedPreferences, Gson gson) {
         this.sharedPreferences = sharedPreferences;
@@ -37,11 +38,8 @@ public class SBMManager {
         load();
     }
 
-    public void load() {
-        //TODO remove this when model fix
-        sharedPreferences.edit().clear().commit();
-        if ((sharedPreferences.getString(KEY_SOUNDS, null) == null) ||
-                (sharedPreferences.getString(KEY_BOXES, null) == null)) {
+    private void load() {
+        if ((sharedPreferences.getString(KEY_SOUNDS, null) == null) || (sharedPreferences.getString(KEY_BOXES, null) == null)) {
             initData();
         } else {
             loadDataFromSharedPreferences();
@@ -49,54 +47,62 @@ public class SBMManager {
     }
 
     public void save() {
-        sharedPreferences.edit().putString(KEY_BOXES, gson.toJson(boxList)).commit();
-        sharedPreferences.edit().putString(KEY_SOUNDS, gson.toJson(soundMap)).commit();
+        sharedPreferences.edit().putString(KEY_BOXES, gson.toJson(boxMap)).apply();
+        sharedPreferences.edit().putString(KEY_SOUNDS, gson.toJson(soundMap)).apply();
     }
 
-    public List<Box> getBoxList() {
-        return boxList;
+    public Map<String, Box> getBoxMap() {
+        return new HashMap<>(boxMap);
     }
 
-    public SBMManager setBoxList(List<Box> boxList) {
-        this.boxList = boxList;
-        return this;
+    public Box getBoxById(String id) {
+        Box box = boxMap.get(id);
+        if (box == null) {
+            throw new SBMException(ExceptionCode.BOX_NOT_FOUND);
+        }
+        return box;
     }
 
     public Map<String, Sound> getSoundMap() {
-        return soundMap;
+        return new HashMap<>(soundMap);
     }
 
-    public SBMManager setSoundMap(Map<String, Sound> soundMap) {
-        this.soundMap = soundMap;
-        return this;
+    public Sound getSoundById(String id) {
+        Sound sound = soundMap.get(id);
+        if (sound == null) {
+            throw new SBMException(ExceptionCode.SOUND_NOT_FOUND);
+        }
+        return sound;
     }
 
     private void initData() {
-        initializeSoundsAndBoxes();
-        Log.d(TAG, "initData : boxList : " + boxList + ", soundMap : " + soundMap);
-
-        sharedPreferences.edit().putString(KEY_BOXES, gson.toJson(boxList)).commit();
-        sharedPreferences.edit().putString(KEY_SOUNDS, gson.toJson(soundMap)).commit();
+        initDefaultModel();
+        Log.d(TAG, "initData : boxMap : " + boxMap + ", soundMap : " + soundMap);
+        sharedPreferences.edit().putString(KEY_BOXES, gson.toJson(boxMap)).apply();
+        sharedPreferences.edit().putString(KEY_SOUNDS, gson.toJson(soundMap)).apply();
     }
 
     private void loadDataFromSharedPreferences() {
-        Type listBoxType = new TypeToken<ArrayList<Box>>() {
-        }.getType();
-        Type mapSoundType = new TypeToken<HashMap<String, Sound>>() {
-        }.getType();
-        boxList = new Gson().fromJson(sharedPreferences.getString(KEY_BOXES, gson.toJson(boxList)), listBoxType);
-        soundMap = new Gson().fromJson(sharedPreferences.getString(KEY_SOUNDS, gson.toJson(soundMap)), mapSoundType);
-        Log.d(TAG, "loadDataFromSharedPreferences : boxList : " + boxList + ", soundMap : " + soundMap);
-
+        Type boxMapType = new TypeToken<HashMap<String, Box>>() {}.getType();
+        Type soundMapType = new TypeToken<HashMap<String, Sound>>() {}.getType();
+        boxMap = new Gson().fromJson(sharedPreferences.getString(KEY_BOXES, gson.toJson(boxMap)), boxMapType);
+        soundMap = new Gson().fromJson(sharedPreferences.getString(KEY_SOUNDS, gson.toJson(soundMap)), soundMapType);
+        Log.d(TAG, "loadDataFromSharedPreferences : boxMap : " + boxMap + ", soundMap : " + soundMap);
     }
 
-    private void initializeSoundsAndBoxes() {
+    private void initDefaultModel() {
+        boxLopez();
+        boxArmes();
+        boxAnimaux();
+        boxPolitique();
+        boxInsultes();
+        boxTest1();
+        boxTest2();
+        boxTest3();
+    }
 
-        boxList = new ArrayList<>();
-        soundMap = new HashMap<>();
-
-        //BOITE A LOPEZ
-        List<String> labels_lopez = Arrays.asList("lopez");
+    private void boxLopez() {
+        List<String> lopezLabels = Collections.singletonList("lopez");
 
         Sound sLopez1 = new Sound()
                 .setId(UUID.randomUUID().toString())
@@ -104,7 +110,7 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.cri)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez1.getId(), sLopez1);
 
         Sound sLopez2 = new Sound()
@@ -113,7 +119,7 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.hehofman)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez2.getId(), sLopez2);
 
         Sound sLopez3 = new Sound()
@@ -122,7 +128,7 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.jvaisvousenculer)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez3.getId(), sLopez3);
 
         Sound sLopez4 = new Sound()
@@ -131,7 +137,7 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.lacalote)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez4.getId(), sLopez4);
 
         Sound sLopez5 = new Sound()
@@ -140,7 +146,7 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.lopezdevosmorts)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez5.getId(), sLopez5);
 
         Sound sLopez6 = new Sound()
@@ -149,7 +155,7 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.tafemme)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez6.getId(), sLopez6);
 
         Sound sLopez7 = new Sound()
@@ -158,7 +164,7 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.vienslatoi)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez7.getId(), sLopez7);
 
         Sound sLopez8 = new Sound()
@@ -167,28 +173,33 @@ public class SBMManager {
                 .setSoundReference("" + R.raw.viensonvaenfinir)
                 .setDefault(true)
                 .setColor(R.color.INDIGO)
-                .setLabels(labels_lopez);
+                .setLabels(lopezLabels);
         soundMap.put(sLopez8.getId(), sLopez8);
 
-        List<BoxButton> soundBoxesLopezList = new ArrayList<>();
-        soundBoxesLopezList.add(new BoxButton().setPosition(1).setSoundReference(sLopez1.getId()));
-        soundBoxesLopezList.add(new BoxButton().setPosition(2).setSoundReference(sLopez2.getId()));
-        soundBoxesLopezList.add(new BoxButton().setPosition(3).setSoundReference(sLopez3.getId()));
-        soundBoxesLopezList.add(new BoxButton().setPosition(4).setSoundReference(sLopez4.getId()));
-        soundBoxesLopezList.add(new BoxButton().setPosition(5).setSoundReference(sLopez5.getId()));
-        soundBoxesLopezList.add(new BoxButton().setPosition(6).setSoundReference(sLopez6.getId()));
-        soundBoxesLopezList.add(new BoxButton().setPosition(7).setSoundReference(sLopez7.getId()));
-        soundBoxesLopezList.add(new BoxButton().setPosition(8).setSoundReference(sLopez8.getId()));
+        List<BoxButton> boxButtons = new ArrayList<>();
+        boxButtons.add(new BoxButton().setPosition(1).setSoundReference(sLopez1.getId()));
+        boxButtons.add(new BoxButton().setPosition(2).setSoundReference(sLopez2.getId()));
+        boxButtons.add(new BoxButton().setPosition(3).setSoundReference(sLopez3.getId()));
+        boxButtons.add(new BoxButton().setPosition(4).setSoundReference(sLopez4.getId()));
+        boxButtons.add(new BoxButton().setPosition(5).setSoundReference(sLopez5.getId()));
+        boxButtons.add(new BoxButton().setPosition(6).setSoundReference(sLopez6.getId()));
+        boxButtons.add(new BoxButton().setPosition(7).setSoundReference(sLopez7.getId()));
+        boxButtons.add(new BoxButton().setPosition(8).setSoundReference(sLopez8.getId()));
 
-        boxList.add(new Box()
+        Box box = new Box()
+                .setId(UUID.randomUUID().toString())
+                .setPosition(0)
                 .setTitle("Boite à Lopez")
                 .setColor(R.color.INDIGO)
                 .setImageResId(R.mipmap.lopez)
                 .setNative(true)
-                .setBoardButtons(soundBoxesLopezList));
+                .setBoxButtons(boxButtons);
+        boxMap.put(box.getId(), box);
+    }
 
-        //ARMES
+    private void boxArmes() {
         List<String> labels_gun = Arrays.asList("arme", "gun");
+
         Sound sGun1 = new Sound()
                 .setId(UUID.randomUUID().toString())
                 .setName(".45")
@@ -197,17 +208,24 @@ public class SBMManager {
                 .setColor(R.color.GREEN)
                 .setLabels(labels_gun);
         soundMap.put(sGun1.getId(), sGun1);
-        List<BoxButton> soundBoxesGunList = new ArrayList<>();
-        soundBoxesGunList.add(new BoxButton().setPosition(1).setSoundReference(sGun1.getId()));
-        boxList.add(new Box()
+
+        List<BoxButton> boxButtons = new ArrayList<>();
+        boxButtons.add(new BoxButton().setPosition(1).setSoundReference(sGun1.getId()));
+
+        Box box = new Box()
+                .setId(UUID.randomUUID().toString())
+                .setPosition(1)
                 .setTitle("Armes")
                 .setColor(R.color.GREEN)
                 .setImageResId(R.mipmap.arme)
                 .setNative(true)
-                .setBoardButtons(soundBoxesGunList));
+                .setBoxButtons(boxButtons);
+        boxMap.put(box.getId(), box);
+    }
 
-        //ANIMAUX
+    private void boxAnimaux() {
         List<String> labels_animal = Arrays.asList("animal", "pet");
+
         Sound sPoule = new Sound()
                 .setId(UUID.randomUUID().toString())
                 .setName("Poule")
@@ -280,56 +298,81 @@ public class SBMManager {
                 .setLabels(labels_animal);
         soundMap.put(sLion.getId(), sLion);
 
-        List<BoxButton> soundBoxesAnimalList = new ArrayList<>();
-        soundBoxesAnimalList.add(new BoxButton().setPosition(1).setSoundReference(sPoule.getId()));
-        soundBoxesAnimalList.add(new BoxButton().setPosition(2).setSoundReference(sBonobo.getId()));
-        soundBoxesAnimalList.add(new BoxButton().setPosition(3).setSoundReference(sBouc.getId()));
-        soundBoxesAnimalList.add(new BoxButton().setPosition(4).setSoundReference(sChevre.getId()));
-        soundBoxesAnimalList.add(new BoxButton().setPosition(5).setSoundReference(sChimpanze.getId()));
-        soundBoxesAnimalList.add(new BoxButton().setPosition(6).setSoundReference(sCoq.getId()));
-        soundBoxesAnimalList.add(new BoxButton().setPosition(7).setSoundReference(sCroco.getId()));
-        soundBoxesAnimalList.add(new BoxButton().setPosition(8).setSoundReference(sLion.getId()));
-        boxList.add(new Box()
+        List<BoxButton> boxButtons = new ArrayList<>();
+        boxButtons.add(new BoxButton().setPosition(1).setSoundReference(sPoule.getId()));
+        boxButtons.add(new BoxButton().setPosition(2).setSoundReference(sBonobo.getId()));
+        boxButtons.add(new BoxButton().setPosition(3).setSoundReference(sBouc.getId()));
+        boxButtons.add(new BoxButton().setPosition(4).setSoundReference(sChevre.getId()));
+        boxButtons.add(new BoxButton().setPosition(5).setSoundReference(sChimpanze.getId()));
+        boxButtons.add(new BoxButton().setPosition(6).setSoundReference(sCoq.getId()));
+        boxButtons.add(new BoxButton().setPosition(7).setSoundReference(sCroco.getId()));
+        boxButtons.add(new BoxButton().setPosition(8).setSoundReference(sLion.getId()));
+
+        Box box = new Box()
+                .setId(UUID.randomUUID().toString())
+                .setPosition(2)
                 .setTitle("Animaux")
                 .setColor(R.color.ORANGE)
                 .setImageResId(R.mipmap.animaux)
                 .setNative(true)
-                .setBoardButtons(soundBoxesAnimalList));
+                .setBoxButtons(boxButtons);
+        boxMap.put(box.getId(), box);
+    }
 
-
+    private void boxPolitique() {
         //TODO
-        boxList.add(new Box()
+        Box box = new Box()
+                .setId(UUID.randomUUID().toString())
+                .setPosition(3)
                 .setTitle("Politique")
                 .setColor(R.color.RED)
                 .setImageResId(R.mipmap.politique)
-                .setNative(true));
-        boxList.add(new Box()
+                .setNative(true);
+        boxMap.put(box.getId(), box);
+    }
+
+    private void boxInsultes() {
+        //TODO
+        Box box = new Box()
+                .setPosition(4)
+                .setId(UUID.randomUUID().toString())
                 .setTitle("Insultes")
                 .setColor(R.color.YELLOW)
                 .setImageResId(R.mipmap.insulte)
-                .setNative(true)
-        );
-        boxList.add(new Box()
-                .setTitle("Ma boite à son")
-                .setColor(R.color.BLUE_GREY)
-                .setNative(false));
-        boxList.add(new Box()
-                .setTitle("Sound box de bogoss")
-                .setColor(R.color.LIME)
-                .setNative(false));
-        boxList.add(new Box()
-                .setTitle("Cake")
-                .setColor(R.color.PINK)
-                .setNative(false));
-
+                .setNative(true);
+        boxMap.put(box.getId(), box);
     }
 
-    public Box getBoxByTitle(String title) {
-        for (Box box : boxList) {
-            if (box.getTitle().equals(title)) {
-                return box;
-            }
-        }
-        throw new SBMException(ExceptionCode.BOX_NOT_FOUND);
+    private void boxTest1() {
+        //TODO
+        Box box = new Box()
+                .setPosition(5)
+                .setId(UUID.randomUUID().toString())
+                .setTitle("Ma boite à son")
+                .setColor(R.color.BLUE_GREY)
+                .setNative(false);
+        boxMap.put(box.getId(), box);
+    }
+
+    private void boxTest2() {
+        //TODO
+        Box box = new Box()
+                .setPosition(6)
+                .setId(UUID.randomUUID().toString())
+                .setTitle("Sound box de bogoss")
+                .setColor(R.color.LIME)
+                .setNative(false);
+        boxMap.put(box.getId(), box);
+    }
+
+    private void boxTest3() {
+        //TODO
+        Box box = new Box()
+                .setPosition(7)
+                .setId(UUID.randomUUID().toString())
+                .setTitle("Cake")
+                .setColor(R.color.PINK)
+                .setNative(false);
+        boxMap.put(box.getId(), box);
     }
 }

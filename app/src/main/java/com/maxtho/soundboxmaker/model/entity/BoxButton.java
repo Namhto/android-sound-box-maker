@@ -2,9 +2,11 @@ package com.maxtho.soundboxmaker.model.entity;
 
 public class BoxButton {
 
+    private String title;
+
     private int position;
 
-    private String SoundReference;
+    private String soundReference;
 
     public int getPosition() {
         return position;
@@ -16,11 +18,20 @@ public class BoxButton {
     }
 
     public String getSoundReference() {
-        return SoundReference;
+        return soundReference;
     }
 
     public BoxButton setSoundReference(String soundReference) {
-        SoundReference = soundReference;
+        this.soundReference = soundReference;
+        return this;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public BoxButton setTitle(String title) {
+        this.title = title;
         return this;
     }
 }

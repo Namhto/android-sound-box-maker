@@ -5,6 +5,6 @@ package com.maxtho.soundboxmaker.exception;
  */
 
 public enum ExceptionCode {
-
-    BOX_NOT_FOUND
+    BOX_NOT_FOUND,
+    SOUND_NOT_FOUND
 }

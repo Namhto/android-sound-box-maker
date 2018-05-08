@@ -21,7 +21,8 @@ public class Box {
 
     private boolean isNative;
 
-    private List<BoxButton> boardButtons = new ArrayList<>();
+    private List<BoxButton> boxButtons = new ArrayList<>();
+    private String id;
 
     public String getTitle() {
         return title;
@@ -59,12 +60,12 @@ public class Box {
         return this;
     }
 
-    public List<BoxButton> getBoardButtons() {
-        return boardButtons;
+    public List<BoxButton> getBoxButtons() {
+        return boxButtons;
     }
 
-    public Box setBoardButtons(List<BoxButton> boardButtons) {
-        this.boardButtons = boardButtons;
+    public Box setBoxButtons(List<BoxButton> boxButtons) {
+        this.boxButtons = boxButtons;
         return this;
     }
 
@@ -75,5 +76,14 @@ public class Box {
     public Box setPosition(int position) {
         this.position = position;
         return this;
+    }
+
+    public Box setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getId() {
+        return id;
     }
 }

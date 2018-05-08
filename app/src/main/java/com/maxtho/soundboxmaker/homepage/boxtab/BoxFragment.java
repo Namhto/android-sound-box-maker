@@ -18,8 +18,11 @@ import com.maxtho.soundboxmaker.homepage.HomePageActivity;
 import com.maxtho.soundboxmaker.homepage.boxtab.adapter.BoxAdapter;
 import com.maxtho.soundboxmaker.model.entity.Box;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,18 +63,29 @@ public class BoxFragment extends Fragment {
         });
         fab.show();
 
-        List<Box> boxList = ((HomePageActivity) getActivity()).sbmManager.getBoxList();
-        populateBoardList(boxList);
+        Map<String, Box> boxMap = ((HomePageActivity) getActivity()).sbmManager.getBoxMap();
+        populateBoardList(boxMap);
 
         configureRecyclerViewBehavior();
 
         return view;
     }
 
-    private void populateBoardList(List<Box> list) {
-        adapter = new BoxAdapter(getActivity(), list);
+    private void populateBoardList(Map<String, Box> boxMap) {
+        adapter = new BoxAdapter(getActivity(), sortBoxListByPostion(boxMap));
         boxList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         boxList.setAdapter(adapter);
+    }
+
+    private List<Box> sortBoxListByPostion(Map<String, Box> boxMap) {
+        List<Box> boxes = new ArrayList<>(boxMap.values());
+        Collections.sort(boxes, new Comparator<Box>() {
+            @Override
+            public int compare(Box o1, Box o2) {
+                return o1.getPosition() - o2.getPosition();
+            }
+        });
+        return boxes;
     }
 
     private void configureRecyclerViewBehavior() {
